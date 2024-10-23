@@ -16,7 +16,7 @@ Stream-Vibe is a movie review website built with React and Next.js. It allows us
 - **Frontend**: 
   - React
   - Next.js
-  - CSS (or Tailwind CSS)
+  - Tailwind CSS
 
 ## Getting Started
 
