@@ -1,4 +1,4 @@
-import "@/app/_styles/globals.css";
+import './_styles/globals.css';
 
 export const metadata = {
   title: "Stream Vibe",
