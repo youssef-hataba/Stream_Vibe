@@ -4,6 +4,10 @@
 
 
 /* For Swiper Pagination */
+.swiper {
+  overflow: hidden; /* Prevents overflow issues */
+}
+
 .swiper-pagination-bullet {
   background-color:#E50000!important; /* Default inactive color */
   opacity: 1; /* Ensure visibility */
@@ -17,4 +21,13 @@
 /* Move Pagination to Bottom */
 .swiper-pagination {
   bottom: 20px; /* Adjust this value to position it as you like */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

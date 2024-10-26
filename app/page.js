@@ -1,9 +1,16 @@
+import MovieSlider from "./_components/MovieSlider";
+import CategoriesSection from "./_components/Categories";
+import TrendingSection from "./_components/TrendingMovies";
+
 const Home = () => {
   return (
-    <div>
-      Hello next app
-    </div>
-  )
-}
+    <div className="bg-black-8">
+      <MovieSlider />
+      <CategoriesSection/>
+      <TrendingSection />
 
-export default Home
+    </div>
+  );
+};
+
+export default Home;
