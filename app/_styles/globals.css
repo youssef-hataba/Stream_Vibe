@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* For Swiper Pagination */
+.swiper-pagination-bullet {
+  background-color:#E50000!important; /* Default inactive color */
+  opacity: 1; /* Ensure visibility */
+}
+
+.swiper-pagination-bullet-active {
+  background-color:#E50000 !important; /* Active color */
+  opacity: 1 !important; /* Ensure visibility */
+}
+
+/* Move Pagination to Bottom */
+.swiper-pagination {
+  bottom: 20px; /* Adjust this value to position it as you like */
+}

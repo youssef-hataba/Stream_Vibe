@@ -1,8 +1,11 @@
+import Loader from "./_components/Loader"
 
 
 const loading = () => {
   return (
-    <h1>hello</h1>
+    <h1>
+      <Loader/>
+    </h1>
   )
 }
 
