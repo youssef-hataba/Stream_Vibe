@@ -23,9 +23,6 @@ const EmblaCarousel = ({slides, options}) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  console.log(isMobile);
-  const imageSize = isMobile ? "original" : "w1280";
-  console.log(imageSize);
 
   const onNavButtonClick = useCallback((emblaApi) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
