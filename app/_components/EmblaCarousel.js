@@ -17,12 +17,8 @@ const EmblaCarousel = ({slides, options}) => {
   const [isMobile, setIsMobile] = useState(false); // Initial value based on window size
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    setIsMobile(window.innerWidth <= 768);
   }, []);
-
 
   const onNavButtonClick = useCallback((emblaApi) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
