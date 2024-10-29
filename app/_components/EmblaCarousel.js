@@ -14,7 +14,7 @@ const EmblaCarousel = ({slides, options}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  const [isMobile, setIsMobile] = useState(false); // Initial value based on window size
+  const [isMobile, setIsMobile] = useState(); // Initial value based on window size
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
