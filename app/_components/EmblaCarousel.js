@@ -90,6 +90,8 @@ const EmblaCarousel = ({slides, options}) => {
   const DotButton = ({onClick, className}) => (
     <button type="button" onClick={onClick} className={className} />
   );
+  
+  if (isMobile === null) return null;
 
   return (
     <section className="embla">
