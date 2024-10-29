@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NextButton from "./NextButton";
 
 const API_KEY = "63782fbca0fe61390d79a5375d4d5b59";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -27,6 +28,7 @@ export default function CategoriesSection() {
 
       {/* Scroll button on the top-right */}
       <div className="absolute top-4 right-4 bg-black p-3 rounded-md flex space-x-2 z-10">
+        {/* <NextButton/> */}
         <button
           className="bg-[#1F1F1F] hover:bg-gray-600 p-2 rounded-md"
           onClick={() => scrollLeft()}

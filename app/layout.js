@@ -1,5 +1,5 @@
 import "./_styles/globals.css";
-import Footer from "./footer/page";
+import Footer from "./_components/Footer";
 
 export const metadata = {
   title: "Stream Vibe",

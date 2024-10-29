@@ -36,7 +36,7 @@ module.exports = {
         },
 
         // Grey Shades
-        grey: {
+        gray: {
           60: "#999999",
           65: "#A6A6A6",
           70: "#B3B3B3",

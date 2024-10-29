@@ -2,27 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* For Swiper Pagination */
-.swiper {
-  overflow: hidden; /* Prevents overflow issues */
-}
-
-.swiper-pagination-bullet {
-  background-color:#E50000!important; /* Default inactive color */
-  opacity: 1; /* Ensure visibility */
-}
-
-.swiper-pagination-bullet-active {
-  background-color:#E50000 !important; /* Active color */
-  opacity: 1 !important; /* Ensure visibility */
-}
-
-/* Move Pagination to Bottom */
-.swiper-pagination {
-  bottom: 20px; /* Adjust this value to position it as you like */
-}
-
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -30,4 +9,136 @@
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+
+.embla {
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+
+}
+
+.embla__viewport {
+  overflow: hidden;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+  border-radius: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom, #1F1F1F, #1F1F1F 49%, #141414 49%, #141414) 1;
+}
+
+.embla__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.embla__slide {
+  flex: 0 0 101%;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-wrapper {
+  position: relative; /* Needed to position the overlay */
+  overflow: hidden; /* Ensures the gradient stays within the bounds */
+}
+
+.embla__slide__img {
+  width: 100%;
+  height: auto; 
+  display: block;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #141414 100%);
+}
+
+@media (max-width: 768px) { /* Adjust for mobile screens */
+  .embla__slide__img {
+    width: auto; /* Use auto width for the normal poster */
+    height: 100%; /* Set height to 100% to fill the container */
+  }
+}
+
+/* Slide content */
+.embla__slide__content {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+.embla__slide__content h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.embla__slide__content p {
+  font-size: 1rem;
+  max-width: 80%;
+  margin: 0 auto 1.5rem;
+  color: #999999;
+}
+
+/* Controls and dots positioning */
+.embla__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  padding: 0 2rem;
+  z-index: 20;
+}
+
+@media (max-width: 768px) { /* Adjust for mobile screens */
+  .embla__controls  {
+    display:none;
+  }
+.embla__slide__content {
+  bottom:3rem;
+}
+}
+
+.embla__dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.embla__dot {
+  width: 17px;
+  height: 4px;
+  background-color: #333;
+  cursor: pointer;
+  transition: width 0.3s ease;
+  border-radius:4px;
+}
+
+.embla__dot--selected {
+  width: 23px;
+  background-color: #E50000;
+}
+
+/* Play button styling for consistency */
+.embla__slide__content .play-button {
+  background-color: #E50000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
 }
