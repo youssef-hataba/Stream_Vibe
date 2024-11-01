@@ -3,8 +3,8 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-black-6 text-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-black-6 text-white py-12 mt-20">
+      <div className="max-w-7xl mx-4 sm:mx-[6%]">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
           {/* First Column */}
           <div>
@@ -92,11 +92,11 @@ export default function Footer() {
           {/* Fifth Column */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 flex gap-4 items-center">
               <li>
                 <Link href="https://www.facebook.com" target="_blank">
                   <Image
-                    src="/images/facebook.png"
+                    src="/images/icons/facebook.png"
                     alt="Facebook Icon"
                     width={40}
                     height={40}
@@ -107,7 +107,7 @@ export default function Footer() {
               <li>
                 <Link href="https://www.instagram.com" target="_blank">
                   <Image
-                    src="/images/instagram.png"
+                    src="/images/icons/linkedin.png"
                     alt="Instagram Icon"
                     width={40}
                     height={40}
@@ -118,7 +118,7 @@ export default function Footer() {
               <li>
                 <Link href="https://www.twitter.com" target="_blank">
                   <Image
-                    src="/images/twitter.png"
+                    src="/images/icons/twitter.png"
                     alt="Twitter Icon"
                     width={40}
                     height={40}

@@ -3,9 +3,7 @@ import Image from "next/image";
 import React, {useCallback, useEffect, useState} from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import NextButton from "./NextButton";
-import PrevButton from "./PrevButton";
-import MediaActions from "./MediaActions";
+import { PrevButton ,NextButton ,MediaActions } from "./Buttons";
 
 const EmblaCarousel = ({slides, options}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);

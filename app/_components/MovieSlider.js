@@ -10,13 +10,12 @@ const MovieSlider = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    // Fetch popular movies from TMDB
     const fetchMovies = async () => {
       try {
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
         );
-        setMovies(response.data.results.slice(5, 10)); // Only take the first 5 movies
+        setMovies(response.data.results.slice(0, 5));
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -26,7 +25,7 @@ const MovieSlider = () => {
   }, []);
 
   return (
-    <div className="mt-12">
+    <div className="mt-20">
       <EmblaCarouselComponent slides={movies} options={OPTIONS} />
     </div>
   );
