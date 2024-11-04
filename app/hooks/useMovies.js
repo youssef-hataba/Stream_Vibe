@@ -47,3 +47,26 @@ export const useFetchMovieDetails = (movieId) => {
 
   return movieDetails;
 };
+
+export const useFetchSuggestedMovies = (movieId) => {
+  const [suggestedMovies, setSuggestedMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchSuggestedMovies = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/movie/${movieId}/recommendations`, {
+          params: { api_key: API_KEY },
+        });
+        setSuggestedMovies(response.data.results);
+      } catch (error) {
+        console.error(`Error fetching suggested movies:`, error);
+      }
+    };
+
+    if (movieId) {
+      fetchSuggestedMovies();
+    }
+  }, [movieId]);
+
+  return suggestedMovies;
+};
