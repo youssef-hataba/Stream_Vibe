@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useFetchMovies, useFetchMovieDetails } from "../hooks/useMovies";
-import { PrevButton ,NextButton } from "./Buttons";
-
+import { useFetchMovies } from "../hooks/useMovies";
+import { PrevButton, NextButton } from "./Buttons";
+import Link from "next/link";
 
 // Movie Section Component
 export default function MovieSection({ title, categoryPath }) {
@@ -38,30 +38,20 @@ export default function MovieSection({ title, categoryPath }) {
 
 // Movie Card Component
 function MovieCard({ movie }) {
-  const movieDetails = useFetchMovieDetails(movie.id);
-
-  if (!movieDetails) return <div>Loading...</div>;
-
   return (
     <div className="bg-black-10 rounded-lg px-4 min-w-[250px] shadow-lg overflow-hidden">
-      <h2 className="text-xl font-semibold my-3 whitespace-nowrap">{movie.title}</h2>
-      <div className="grid gap-2">
-        <div className="movie-card">
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`}
-            alt={movieDetails.title}
-            className="w-full rounded-lg object-cover"
-          />
+      <Link href={`/movie/${movie.id}`}>
+        <h2 className="text-xl font-semibold my-3 whitespace-nowrap">{movie.title}</h2>
+        <div className="grid gap-2">
+          <div className="movie-card">
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              alt={movie.title}
+              className="w-full rounded-lg object-cover"
+            />
+          </div>
         </div>
-        <div className="text-white mt-2 mb-3">
-          <p>
-            <strong>Duration:</strong> {movieDetails.runtime} mins
-          </p>
-          <p>
-            <strong>Viewers:</strong> {movieDetails.vote_count} votes
-          </p>
-        </div>
-      </div>
+      </Link>
     </div>
   );
 }
