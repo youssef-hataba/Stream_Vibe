@@ -4,6 +4,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { PrevButton ,NextButton ,MediaActions } from "./Buttons";
+import MovieHeroBanner from "./MovieHeroBanner";
 
 const EmblaCarousel = ({slides, options}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
@@ -97,29 +98,7 @@ const EmblaCarousel = ({slides, options}) => {
         <div className="embla__container">
           {slides.map((movie) => (
             <div className="embla__slide" key={movie.id}>
-              <div className="image-wrapper">
-                <Image
-                  src={
-                    isMobile
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` // Mobile image
-                      : `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}` // Desktop image
-                  }
-                  alt={movie.title || "Movie poster"}
-                  layout="responsive"
-                  width={isMobile ? 500 : 1280} // Set width based on device
-                  height={isMobile ? 150 : 720} // Set height based on device
-                  className="embla__slide__img"
-                  priority
-                />
-                <div className="gradient-overlay"></div>
-              </div>
-              <div className="embla__slide__content">
-                <h2>{movie.title}</h2>
-                <p className="hidden lg:block">{movie.overview}</p>
-                <div className="flex justify-center">
-                  <MediaActions />
-                </div>
-              </div>
+              <MovieHeroBanner movie={movie} classes="hidden"/>
             </div>
           ))}
         </div>

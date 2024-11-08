@@ -48,6 +48,33 @@ export const useFetchMovieDetails = (movieId) => {
   return movieDetails;
 };
 
+
+export const useFetchMovieCast = (movieId) => {
+  const [cast, setCast] = useState([]);
+
+  useEffect(() => {
+    const fetchMovieCast = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+          params: { api_key: API_KEY },
+        });
+        const filteredCast = response.data.cast
+          .filter((actor) => actor.profile_path)
+          .slice(0, 10);
+        setCast(filteredCast);
+      } catch (error) {
+        console.error("Error fetching movie cast:", error);
+      }
+    };
+
+    fetchMovieCast();
+  }, [movieId]);
+
+  return cast;
+};
+
+
+
 export const useFetchSuggestedMovies = (movieId) => {
   const [suggestedMovies, setSuggestedMovies] = useState([]);
 

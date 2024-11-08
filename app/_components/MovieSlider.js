@@ -25,7 +25,7 @@ const MovieSlider = () => {
   }, []);
 
   return (
-    <div className="mt-20">
+    <div>
       <EmblaCarouselComponent slides={movies} options={OPTIONS} />
     </div>
   );

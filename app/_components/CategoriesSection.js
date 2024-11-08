@@ -8,7 +8,7 @@ export default function CategoriesSection() {
   const categories = useFetchCategories();
 
   return (
-    <div className="bg-black-8 mt-20 text-white relative">
+    <div className="bg-black-8 mt-16 text-white relative">
       <div className="flex items-center justify-between">
         <h1 className="text-4xl font-bold">Movies Categories</h1>
 

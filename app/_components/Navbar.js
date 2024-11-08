@@ -1,83 +1,43 @@
+// components/Navbar.js
+
 "use client";
 
-import {useState} from "react";
 import Link from "next/link";
-import styles from "./Navbar.module.css";
+import Search from "./Search";
+import {useState} from "react";
 
-
+import {FaSearch} from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
+  const classes = isOpen ? "" : "hidden lg:block";
+
+  const handleOpen = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.burger} onClick={() => toggleMenu()}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      <div className={styles.logo}>
+    <nav className="mx-4 sm:mx-[6%] flex items-center justify-between pt-[20px] pb-[30px]">
+      {!isOpen && (
         <Link href="/">
-          <img src="/Logo.svg" alt="logo" />
+          <img src="/Logo.svg" alt="logo" className="h-[46px]" />
         </Link>
+      )}
+
+      <Search classes={classes} />
+
+      <div className="flex items-center gap-4">
+        <FaSearch className="text-red-45 lg:hidden" size={25} onClick={handleOpen} />
+        {!isOpen && (
+          <p
+            className="text-gray-60 border-4 border-black-12 font-semibold rounded-full px-5 py-1.5 
+          cursor-pointer hover:text-red-45 hover:text-opacity-100 hover:border-red-45 
+          hover:border-opacity-70 transition-all duration-200">
+            Login
+          </p>
+        )}
       </div>
-
-
-      <ul className={styles.navLinks} style={isOpen ? {left: "0"} : {left: "-100%"}}>
-        <li>
-          <Link href="/" className={styles.active}>
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link href="/about">About</Link>
-        </li>
-        <li>
-          <Link href="/services">Services</Link>
-        </li>
-        <li>
-          <Link href="/contact">Contact</Link>
-        </li>
-      </ul>
-
-      <ul className={styles.authLinks}>
-        <li>
-          <Link href="/login">Login</Link>
-        </li>
-        <li>
-          <Link href="/register">Register</Link>
-        </li>
-      </ul>
-
-      {/* القائمة الجانبية */}
-      {/* <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
-        <ul>
-          <li>
-            <Link href="/" onClick={toggleMenu}>Home</Link>
-          </li>
-          <li>
-            <Link href="/about" onClick={toggleMenu}>About</Link>
-          </li>
-          <li>
-            <Link href="/services" onClick={toggleMenu}>Services</Link>
-          </li>
-          <li>
-            <Link href="/contact" onClick={toggleMenu}>Contact</Link>
-          </li>
-          <li>
-            <Link href="/login" onClick={toggleMenu}>Login</Link>
-          </li>
-          <li>
-            <Link href="/register" onClick={toggleMenu}>Register</Link>
-          </li>
-        </ul>
-      </div> */}
     </nav>
   );
 };

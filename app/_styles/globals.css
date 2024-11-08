@@ -2,14 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: #333333 transparent; 
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px; 
+  background: transparent;
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: #333333; 
+  border-radius: 10px; 
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none; 
+}
+
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; 
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
 
 
 .embla {
@@ -142,3 +170,7 @@
   font-weight: bold;
   margin-top: 1rem;
 }
+
+
+/* Apply to the entire website */
+
