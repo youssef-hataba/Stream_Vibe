@@ -48,6 +48,9 @@ module.exports = {
           99: "#FCFCFD",
         },
       },
+      animation: {
+        'ping-slow': 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
     },
   },
   plugins: [],

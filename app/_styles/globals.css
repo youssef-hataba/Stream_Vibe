@@ -171,6 +171,12 @@
   margin-top: 1rem;
 }
 
-
-/* Apply to the entire website */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) translate(0, -250%);
+  }
+  100% {
+    transform: rotate(360deg) translate(0, -250%);
+  }
+}
 

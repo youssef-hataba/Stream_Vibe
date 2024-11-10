@@ -1,11 +1,8 @@
-"use client";
+import { fetchCategories, fetchMoviesByCategory } from "../hooks/useCategories"; 
+import SectionButtons from "./SectionButtons";
 
-import { useFetchCategories, useFetchMoviesByCategory } from "../hooks/useCategories"; 
-import { PrevButton ,NextButton } from "./Buttons";
-
-
-export default function CategoriesSection() {
-  const categories = useFetchCategories();
+export default async function CategoriesSection() {
+  const categories = await fetchCategories();
 
   return (
     <div className="bg-black-8 mt-16 text-white relative">
@@ -13,10 +10,7 @@ export default function CategoriesSection() {
         <h1 className="text-4xl font-bold">Movies Categories</h1>
 
         {/* Scroll buttons */}
-        <div className="flex gap-4">
-          <PrevButton onClick={() => scrollLeft()} />
-          <NextButton onClick={() => scrollRight()} />
-        </div>
+        <SectionButtons scrollId="scrollContainer"/>
       </div>
 
       {/* Scrollable container */}
@@ -34,8 +28,8 @@ export default function CategoriesSection() {
 }
 
 // Category Card Component
-function CategoryCard({ genre }) {
-  const movies = useFetchMoviesByCategory(genre.id);
+async function CategoryCard({ genre }) {
+  const movies = await fetchMoviesByCategory(genre.id);
 
   return (
     <div className="bg-black-10 rounded-lg p-4 min-w-[250px] shadow-lg">
@@ -60,15 +54,4 @@ function MoviesDisplay({ movies }) {
       ))}
     </div>
   );
-}
-
-// JavaScript functions for smooth scrolling
-function scrollLeft() {
-  const container = document.getElementById("scrollContainer");
-  container.scrollBy({ left: -450, behavior: "smooth" });
-}
-
-function scrollRight() {
-  const container = document.getElementById("scrollContainer");
-  container.scrollBy({ left: 450, behavior: "smooth" });
 }

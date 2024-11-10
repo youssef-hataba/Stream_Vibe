@@ -1,99 +1,63 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import axios from "axios";
 
 const API_KEY = "63782fbca0fe61390d79a5375d4d5b59";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export const useFetchMovies = (categoryPath) => {
-  const [movies, setMovies] = useState([]);
+// Fetch Movies by Category
+export async function fetchMovies(categoryPath) {
+  try {
+    const response = await axios.get(`${BASE_URL}${categoryPath}`, {
+      params: { api_key: API_KEY },
+    });
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching movies:`, error);
+    return [];
+  }
+}
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}${categoryPath}`, {
-          params: { api_key: API_KEY },
-        });
-        setMovies(response.data.results);
-      } catch (error) {
-        console.error(`Error fetching movies:`, error);
+// Fetch Movie Details
+export async function fetchMovieDetails(movieId) {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+      params: { api_key: API_KEY },
+    });
+    return response.data || null;
+  } catch (error) {
+    console.error("Error fetching movie details:", error);
+    return null;
+  }
+}
+
+// Fetch Movie Cast
+export async function fetchMovieCast(movieId) {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
+      params: { api_key: API_KEY },
+    });
+    // Filter and limit the cast
+    return response.data.cast
+      .filter((actor) => actor.profile_path)
+      .slice(0, 10);
+  } catch (error) {
+    console.error("Error fetching movie cast:", error);
+    return [];
+  }
+}
+
+// Fetch Suggested Movies
+export async function fetchSuggestedMovies(movieId) {
+  if (!movieId) return [];
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/movie/${movieId}/recommendations`,
+      {
+        params: { api_key: API_KEY },
       }
-    };
-
-    fetchMovies();
-  }, [categoryPath]);
-
-  return movies;
-};
-
-export const useFetchMovieDetails = (movieId) => {
-  const [movieDetails, setMovieDetails] = useState(null);
-
-  useEffect(() => {
-    const fetchMovieDetails = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
-          params: { api_key: API_KEY },
-        });
-        setMovieDetails(response.data);
-      } catch (error) {
-        console.error("Error fetching movie details:", error);
-      }
-    };
-
-    fetchMovieDetails();
-  }, [movieId]);
-
-  return movieDetails;
-};
-
-
-export const useFetchMovieCast = (movieId) => {
-  const [cast, setCast] = useState([]);
-
-  useEffect(() => {
-    const fetchMovieCast = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/movie/${movieId}/credits`, {
-          params: { api_key: API_KEY },
-        });
-        const filteredCast = response.data.cast
-          .filter((actor) => actor.profile_path)
-          .slice(0, 10);
-        setCast(filteredCast);
-      } catch (error) {
-        console.error("Error fetching movie cast:", error);
-      }
-    };
-
-    fetchMovieCast();
-  }, [movieId]);
-
-  return cast;
-};
-
-
-
-export const useFetchSuggestedMovies = (movieId) => {
-  const [suggestedMovies, setSuggestedMovies] = useState([]);
-
-  useEffect(() => {
-    const fetchSuggestedMovies = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/movie/${movieId}/recommendations`, {
-          params: { api_key: API_KEY },
-        });
-        setSuggestedMovies(response.data.results);
-      } catch (error) {
-        console.error(`Error fetching suggested movies:`, error);
-      }
-    };
-
-    if (movieId) {
-      fetchSuggestedMovies();
-    }
-  }, [movieId]);
-
-  return suggestedMovies;
-};
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching suggested movies:`, error);
+    return [];
+  }
+}
