@@ -13,7 +13,7 @@ const MovieHeroBanner = ({movie,classes}) => {
     setIsMobile(window.innerWidth <= 768);
   }, []);
 
-  console.log(movie)
+  if (isMobile === null) return null;
 
   return (
     <div className="mb-20 relative">

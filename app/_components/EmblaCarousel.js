@@ -13,12 +13,6 @@ const EmblaCarousel = ({slides, options}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  const [isMobile, setIsMobile] = useState(null);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
-  }, []);
-
   const onNavButtonClick = useCallback((emblaApi) => {
     const autoplay = emblaApi?.plugins()?.autoplay;
     if (!autoplay) return;
@@ -90,7 +84,6 @@ const EmblaCarousel = ({slides, options}) => {
     <button type="button" onClick={onClick} className={className} />
   );
   
-  if (isMobile === null) return null;
 
   return (
     <section className="embla">

@@ -30,12 +30,14 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <FaSearch className="text-red-45 lg:hidden" size={25} onClick={handleOpen} />
         {!isOpen && (
+          <Link href="/auth/login">
           <p
             className="text-gray-60 border-4 border-black-12 font-semibold rounded-full px-5 py-1.5 
           cursor-pointer hover:text-red-45 hover:text-opacity-100 hover:border-red-45 
           hover:border-opacity-70 transition-all duration-200">
             Login
           </p>
+          </Link>
         )}
       </div>
     </nav>

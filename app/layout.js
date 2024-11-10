@@ -2,11 +2,13 @@ import "./_styles/globals.css";
 import Footer from "./_components/Footer";
 import Navbar from "./_components/Navbar";
 
+
 export const metadata = {
   title: "Stream Vibe",
 };
 
 export default function RootLayout({children}) {
+
   return (
     <html lang="en">
       <body className="bg-black-8">
