@@ -34,9 +34,9 @@ const MovieHeroBanner = ({movie,classes}) => {
           />
           <div className="gradient-overlay"></div>
         </div>
-        <div className="embla__slide__content">
+        <div className="embla__slide__content ">
           <h2>{movie.title}</h2>
-          <p className="hidden lg:block">{movie.overview}</p>
+          <p className="hidden lg:block ">{movie.overview}</p>
           <div className="flex justify-center">
             <MediaActions classes={classes} />
           </div>

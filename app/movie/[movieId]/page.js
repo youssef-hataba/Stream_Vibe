@@ -4,7 +4,6 @@ import {IoLanguage} from "react-icons/io5";
 import {TbLayoutGrid} from "react-icons/tb";
 import { FaRegClock } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
-
 import React from "react";
 import {
   useFetchMovieDetails,
@@ -45,7 +44,7 @@ export default function MovieDetailsPage({params}) {
           {cast.length > 0 ? (
             <div className="bg-black-10 p-8 rounded-lg mb-6 border border-black-15">
               <h2 className="text-xl font-semibold">Cast</h2>
-              <div className="flex gap-2 overflow-x-auto pt-7">
+              <div className="flex gap-2 overflow-x-auto scroll-smooth pt-7">
                 {cast
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
@@ -66,11 +65,10 @@ export default function MovieDetailsPage({params}) {
 
           {/* Reviews Section */}
           <div className="bg-black-10 p-4 rounded-lg shadow">
-            <h2 className="text-xl font-semibold">Reviews: {movie.reviews}</h2>
             <div className="mt-4 space-y-4">
               <div className="bg-black-10 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold">
-                  Ratings: <span className="text-sm text-gray-400"> {movie.vote_average}</span>
+                  Ratings: <span className="text-sm text-gray-400">{movie.vote_average}</span>
                 </h3>
                 <div className="mt-2 text-yellow-500">★★★★☆</div>
               </div>
@@ -79,7 +77,7 @@ export default function MovieDetailsPage({params}) {
         </div>
 
         {/* Right Column */}
-        <div className="w-[30%] space-y- bg-black-10 p-8 rounded-lg border border-black-15">
+        <div className=" space-y- bg-black-10 p-8 rounded-lg border border-black-15">
           {/* Info Cards */}
           <div className="p-4">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
@@ -128,7 +126,7 @@ export default function MovieDetailsPage({params}) {
           <div className=" p-4 rounded-lg ">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
             <FaEye className="inline-block" />
-              Viewers:
+              Votes:
             </h2>
             <p className="text-gray-90">{movie.vote_count} votes</p>
           </div>
@@ -137,7 +135,7 @@ export default function MovieDetailsPage({params}) {
 
       <div className="mt-10">
         <h2 className="text-3xl font-bold mb-6">Suggested Movies</h2>
-        <div className="grid grid-cols-5 gap-6">
+        <div className="grid lg:grid-cols-5 md:grid-cols-3  gap-6 ">
           {suggestedMovies.slice(0, 10).map((suggestedMovie) => (
             <Link key={suggestedMovie.id} href={`/movie/${suggestedMovie.id}`}>
               <img

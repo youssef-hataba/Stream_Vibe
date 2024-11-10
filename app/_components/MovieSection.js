@@ -3,6 +3,7 @@
 import { useFetchMovies } from "../hooks/useMovies";
 import { PrevButton, NextButton } from "./Buttons";
 import Link from "next/link";
+import { FaEye } from "react-icons/fa";
 
 // Movie Section Component
 export default function MovieSection({ title, categoryPath }) {
@@ -52,7 +53,13 @@ function MovieCard({ movie }) {
           </div>
         </div>
       </Link>
-    </div>
+      <div className="flex relative gap-10 mb-2">
+            <h2 className="border border-gray-500 rounded-full w-fit bg-black text-sm font-semibold text-gray-400 p-2 flex flex-row-reverse items-center ml-auto space-x-reverse space-x-2 mt-3 " >
+            <FaEye className="text-gray-400 " />{movie.vote_count}</h2>
+        <div className="border border-gray-500 rounded-full w-fit bg-black text-sm font-semibold p-2 flex flex-row mt-3 text-red-500">★★★★☆ <span className="text-gray-500">{movie.vote_average}</span>
+        </div>
+        </div>
+        </div>
   );
 }
 
