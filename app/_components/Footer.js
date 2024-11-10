@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FaFacebookSquare } from "react-icons/fa";
+import { FaInstagramSquare } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -60,7 +63,29 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Third Column */}
+           {/* Third Column */}
+           <div>
+            <h3 className="text-lg font-semibold mb-4">Series</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="hover:underline text-gray-400">
+                  Gernes
+                </Link>
+              </li>
+              <li>
+                <Link href="/" className="hover:underline text-gray-400">
+                  Trending
+                </Link>
+              </li>
+              <li>
+                <Link href="/" className="hover:underline text-gray-400">
+                  Popular
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Forth Column */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
@@ -72,58 +97,23 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Fourth Column */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Subscription</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/" className="hover:underline text-gray-400">
-                  Plans
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="hover:underline text-gray-400">
-                  Features
-                </Link>
-              </li>
-            </ul>
-          </div>
-
           {/* Fifth Column */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
-            <ul className="space-y-2 flex gap-4 items-center">
+            <ul className= "flex gap-4 items-center">
               <li>
                 <Link href="https://www.facebook.com" target="_blank">
-                  <Image
-                    src="/images/icons/facebook.png"
-                    alt="Facebook Icon"
-                    width={40}
-                    height={40}
-                    className="rounded-lg shadow-lg"
-                  />
+                <FaFacebookSquare />
                 </Link>
               </li>
               <li>
                 <Link href="https://www.instagram.com" target="_blank">
-                  <Image
-                    src="/images/icons/linkedin.png"
-                    alt="Instagram Icon"
-                    width={40}
-                    height={40}
-                    className="rounded-lg shadow-lg"
-                  />
+                <FaInstagramSquare />
                 </Link>
               </li>
               <li>
                 <Link href="https://www.twitter.com" target="_blank">
-                  <Image
-                    src="/images/icons/twitter.png"
-                    alt="Twitter Icon"
-                    width={40}
-                    height={40}
-                    className="rounded-lg shadow-lg"
-                  />
+                <FaTwitter />
                 </Link>
               </li>
             </ul>
