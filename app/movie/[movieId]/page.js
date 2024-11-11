@@ -10,18 +10,16 @@ import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
 
 
-// Server Component
 export default async function MovieDetailsPage({params}) {
   const {movieId} = params;
 
-  // Fetch data using await to resolve all promises before rendering
   const [movie, cast, suggestedMovies] = await Promise.all([
     fetchMovieDetails(movieId),
     fetchMovieCast(movieId),
     fetchSuggestedMovies(movieId),
   ]);
 
-  // If the movie details are not fetched, show a fallback
+
   if (!movie) return <Spinner1 />;
 
   return (

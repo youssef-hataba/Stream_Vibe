@@ -61,7 +61,7 @@ const Search = ({classes}) => {
         />
         <button
           type="submit"
-          className="px-4 py-2 text-red-60 opacity-[70%] hover:opacity-[100%] transition-opacity rounded-r-full duration-75"
+          className="px-4 py-2 text-red-800 hover:text-red-45 transition-all duration-150"
           onClick={() => setIsFocused(true)}
           onBlur={handleBlur}
         >
