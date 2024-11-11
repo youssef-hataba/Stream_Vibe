@@ -12,7 +12,7 @@ import MovieCard from "@/app/_components/MovieCard";
 
 // Server Component
 export default async function MovieDetailsPage({params}) {
-  const {movieId} = params;
+  const {movieId} = await params;
 
   // Fetch data using await to resolve all promises before rendering
   const [movie, cast, suggestedMovies] = await Promise.all([

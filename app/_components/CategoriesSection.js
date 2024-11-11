@@ -1,5 +1,6 @@
 import { fetchCategories, fetchMoviesByCategory } from "../hooks/useCategories"; 
 import SectionButtons from "./SectionButtons";
+import Link from "next/link";
 
 export default async function CategoriesSection() {
   const categories = await fetchCategories();
@@ -30,11 +31,13 @@ export default async function CategoriesSection() {
 // Category Card Component
 async function CategoryCard({ genre }) {
   const movies = await fetchMoviesByCategory(genre.id);
-
+  
   return (
     <div className="bg-black-10 rounded-lg p-4 min-w-[240px]">
+      <Link href={`/category/${genre.id}`}>
       <h2 className="text-2xl font-semibold mb-4">{genre.name}</h2>
       <MoviesDisplay movies={movies} />
+      </Link>
     </div>
   );
 }
