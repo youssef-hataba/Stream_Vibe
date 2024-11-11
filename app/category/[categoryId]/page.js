@@ -22,7 +22,7 @@ export default function CategoryPage() {
     return (
 <div className="mt-10">
   <h2 className="text-3xl text-white font-bold mb-6">Movies of Category</h2>
-  <div className="grid grid-cols-auto gap-6 text-white overflow-y-auto max-h-[500px]">
+  <div className="grid grid-cols-auto gap-6 text-white overflow-y-auto">
     {movies?.map((movie) => (
     <MovieCard movie={movie} key={movie.id} />
     ))}

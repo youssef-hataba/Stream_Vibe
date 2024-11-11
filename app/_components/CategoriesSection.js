@@ -36,7 +36,7 @@ async function CategoryCard({ genre }) {
     <div className="bg-black-10 rounded-lg p-4 min-w-[240px]">
       <Link href={`/category/${genre.id}`}>
       <h2 className="text-2xl font-semibold mb-4">{genre.name}</h2>
-      <MoviesDisplay movies={movies} />
+      <MoviesDisplay movies={movies.slice(0, 4)} />
       </Link>
     </div>
   );
@@ -45,7 +45,7 @@ async function CategoryCard({ genre }) {
 // Movies Display Component
 function MoviesDisplay({ movies }) {
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div className="grid grid-cols-2 gap-2 ">
       {movies.map((movie) => (
         <div key={movie.id} className="movie-card">
           <img
