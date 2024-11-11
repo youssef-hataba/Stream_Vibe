@@ -87,7 +87,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full p-3 border border-black-15 text-red-45 font-semibold rounded-lg
             bg-black-6 text-base hover:bg-red-50 hover:bg-opacity-70 hover:font-bold hover:text-black-6
-              transition-all duration-150"
+            transition-all duration-200"
           >
             Login
           </button>

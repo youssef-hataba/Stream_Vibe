@@ -7,7 +7,7 @@ export default async function CategoriesSection() {
   return (
     <div className="bg-black-8 mt-16 text-white relative">
       <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-bold">Movies Categories</h1>
+        <h1 className="md:text-4xl text-[27px] font-bold">Movies Categories</h1>
 
         {/* Scroll buttons */}
         <SectionButtons scrollId="scrollContainer"/>
@@ -32,7 +32,7 @@ async function CategoryCard({ genre }) {
   const movies = await fetchMoviesByCategory(genre.id);
 
   return (
-    <div className="bg-black-10 rounded-lg p-4 min-w-[250px] shadow-lg">
+    <div className="bg-black-10 rounded-lg p-4 min-w-[240px]">
       <h2 className="text-2xl font-semibold mb-4">{genre.name}</h2>
       <MoviesDisplay movies={movies} />
     </div>

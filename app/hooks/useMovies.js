@@ -11,7 +11,7 @@ export async function fetchMovies(categoryPath) {
     });
     return response.data.results || [];
   } catch (error) {
-    console.error(`Error fetching movies:`, error);
+    console.error(`Error fetching movies:`, error.message);
     return [];
   }
 }
@@ -24,7 +24,7 @@ export async function fetchMovieDetails(movieId) {
     });
     return response.data || null;
   } catch (error) {
-    console.error("Error fetching movie details:", error);
+    console.error("Error fetching movie details:", error.message);
     return null;
   }
 }
@@ -40,7 +40,7 @@ export async function fetchMovieCast(movieId) {
       .filter((actor) => actor.profile_path)
       .slice(0, 10);
   } catch (error) {
-    console.error("Error fetching movie cast:", error);
+    console.error("Error fetching movie cast:", error.message);
     return [];
   }
 }
@@ -57,7 +57,7 @@ export async function fetchSuggestedMovies(movieId) {
     );
     return response.data.results || [];
   } catch (error) {
-    console.error(`Error fetching suggested movies:`, error);
+    console.error(`Error fetching suggested movies:`, error.message);
     return [];
   }
 }

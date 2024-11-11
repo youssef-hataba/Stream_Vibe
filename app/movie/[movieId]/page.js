@@ -1,39 +1,37 @@
-"use client";
 import {CiCalendar} from "react-icons/ci";
 import {IoLanguage} from "react-icons/io5";
 import {TbLayoutGrid} from "react-icons/tb";
-import { FaRegClock } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
-import React from "react";
-import {
-  useFetchMovieDetails,
-  useFetchSuggestedMovies,
-  useFetchMovieCast,
-} from "@/app/hooks/useMovies";
+import {FaRegClock} from "react-icons/fa6";
+import {FaEye} from "react-icons/fa";
 import Link from "next/link";
+import {fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast} from "@/app/hooks/useMovies";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
-
-export default function MovieDetailsPage({params}) {
-  const { movieId } = React.use(params);
-  const movie = useFetchMovieDetails(movieId);
-  const cast = useFetchMovieCast(movieId);
-  const suggestedMovies = useFetchSuggestedMovies(movieId);
-
-  if (!movie) return <div>Loading...</div>;
-  if (!suggestedMovies) return <div>Loading suggested movies...</div>;
+import {Spinner1} from "@/app/_components/Spinner";
+import MovieCard from "@/app/_components/MovieCard";
 
 
-  const languages = movie.spoken_languages?.map((lang) => lang.english_name).join(", ");
+// Server Component
+export default async function MovieDetailsPage({params}) {
+  const {movieId} = params;
+
+  // Fetch data using await to resolve all promises before rendering
+  const [movie, cast, suggestedMovies] = await Promise.all([
+    fetchMovieDetails(movieId),
+    fetchMovieCast(movieId),
+    fetchSuggestedMovies(movieId),
+  ]);
+
+  // If the movie details are not fetched, show a fallback
+  if (!movie) return <Spinner1 />;
 
   return (
-    <div className=" bg-black-8 text-white">
+    <div className="bg-black-8 text-white">
       {/* Header Section with Image and Title */}
-      <MovieHeroBanner movie={movie}/>
-
+        <MovieHeroBanner movie={movie} />
       {/* Main Content Section */}
       <div className="flex flex-col md:flex-row gap-5 mt-16">
         {/* Left Column */}
-        <div className="md:w-[70%]">
+        <div className="md:w-[70%] flex-1">
           {/* Description Section */}
           <div className="bg-black-10 mb-5 p-8 rounded-lg border border-black-15">
             <h2 className="text-xl font-semibold text-gray-99">Description</h2>
@@ -41,14 +39,14 @@ export default function MovieDetailsPage({params}) {
           </div>
 
           {/* Cast Section */}
-          {cast.length > 0 ? (
+          {cast?.length > 0 && (
             <div className="bg-black-10 p-8 rounded-lg mb-6 border border-black-15">
               <h2 className="text-xl font-semibold">Cast</h2>
-              <div className="flex gap-2 overflow-x-auto scroll-smooth pt-7">
+              <div className="flex gap-3 overflow-x-auto scroll-smooth pt-7">
                 {cast
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
-                    <div key={actor.cast_id} className="min-w-[100px]">
+                    <div key={actor.cast_id} className="max-w-[100px] min-w-[80px] overflow-hidden">
                       <img
                         src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
                         alt={actor.name}
@@ -59,8 +57,6 @@ export default function MovieDetailsPage({params}) {
                   ))}
               </div>
             </div>
-          ) : (
-            ""
           )}
 
           {/* Reviews Section */}
@@ -77,7 +73,7 @@ export default function MovieDetailsPage({params}) {
         </div>
 
         {/* Right Column */}
-        <div className=" space-y- bg-black-10 p-8 rounded-lg border border-black-15">
+        <div className="space-y- bg-black-10 p-8 rounded-lg border border-black-15">
           {/* Info Cards */}
           <div className="p-4">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
@@ -86,7 +82,8 @@ export default function MovieDetailsPage({params}) {
             </h2>
             <p className="text-gray-90">{movie.release_date}</p>
           </div>
-          <div className=" p-4">
+
+          <div className="p-4">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
               <IoLanguage className="inline-block" />
               Available Language
@@ -101,31 +98,34 @@ export default function MovieDetailsPage({params}) {
               ))}
             </div>
           </div>
-          <div className=" p-4 rounded-lg">
+
+          <div className="p-4 rounded-lg">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
               <TbLayoutGrid className="inline-block" />
               Genre
             </h2>
             <div className="flex gap-1.5 flex-wrap">
-              {movie.genres?.map((gener) => (
+              {movie.genres?.map((genre) => (
                 <span
-                  key={gener.name}
+                  key={genre.name}
                   className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md">
-                  {gener.name}
+                  {genre.name}
                 </span>
               ))}
             </div>
           </div>
-          <div className=" p-4 rounded-lg">
+
+          <div className="p-4 rounded-lg">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
-            <FaRegClock className="inline-block" size={18} />
+              <FaRegClock className="inline-block" size={18} />
               Duration:
             </h2>
             <p className="text-gray-90">{movie.runtime} mins</p>
           </div>
-          <div className=" p-4 rounded-lg ">
+
+          <div className="p-4 rounded-lg">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
-            <FaEye className="inline-block" />
+              <FaEye className="inline-block" />
               Votes:
             </h2>
             <p className="text-gray-90">{movie.vote_count} votes</p>
@@ -133,19 +133,12 @@ export default function MovieDetailsPage({params}) {
         </div>
       </div>
 
+      {/* Suggested Movies Section */}
       <div className="mt-10">
         <h2 className="text-3xl font-bold mb-6">Suggested Movies</h2>
-        <div className="grid lg:grid-cols-5 md:grid-cols-3  gap-6 ">
-          {suggestedMovies.slice(0, 10).map((suggestedMovie) => (
-            <Link key={suggestedMovie.id} href={`/movie/${suggestedMovie.id}`}>
-              <img
-                src={`https://image.tmdb.org/t/p/w200/${suggestedMovie.poster_path}`}
-                alt={suggestedMovie.title}
-                className="w-full rounded-lg object-cover"
-              />
-              <h3 className="mt-4 text-lg font-semibold">{suggestedMovie.title}</h3>
-              <p className="text-gray-400">Rating: {suggestedMovie.vote_average}</p>
-            </Link>
+        <div className="grid grid-cols-auto gap-6">
+          {suggestedMovies?.slice(0, 10).map((suggestedMovie) => (
+            <MovieCard movie={suggestedMovie} key={suggestedMovie.id} />
           ))}
         </div>
       </div>

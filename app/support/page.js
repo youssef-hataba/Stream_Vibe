@@ -24,7 +24,7 @@ export default function SupportPage() {
       {/*  Left Side */}
       <div className="flex flex-col items-start gap-10">
         <h1 className="text-4xl md:text-6xl font-bold text-white">Welcome to our support page!</h1>
-        <p className="font-light text-lg md:text-2xl text-gray-300 leading-7">We're here to help you with any problems you may be having with our product.</p>
+        <p className="font-light text-lg md:text-2xl text-gray-300 leading-7">We&apos;re here to help you with any problems you may be having with our product.</p>
           <Image
               width={429}
               height={380}
@@ -79,7 +79,7 @@ export default function SupportPage() {
       <div className="col-span-1 md:col-span-2 mt-12">
       <h2 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h2>
       <div className="flex w-1280 h-76 gap-8 mb-6 ">
-        <p className="text-gray-400 mb-6">Got questions? We've got answers! Check out our FAQ section to find answers to the most common questions about StreamVibe.</p>
+        <p className="text-gray-400 mb-6">Got questions? We&apos;ve got answers! Check out our FAQ section to find answers to the most common questions about StreamVibe.</p>
         <button className="mt-0 py-2 px-4 bg-red-600 text-white font-semibold rounded">Ask a Question</button>
         </div>
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
