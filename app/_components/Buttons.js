@@ -3,7 +3,6 @@ import {FaHeart} from "react-icons/fa";
 import {FaPlay} from "react-icons/fa6";
 import { GrLinkPrevious } from "react-icons/gr";
 
-
 // Next Button Component
 export const NextButton = ({onClick}) => {
   return (

@@ -11,7 +11,7 @@ import MovieCard from "@/app/_components/MovieCard";
 
 
 export default async function MovieDetailsPage({params}) {
-  const {movieId} = params;
+  const {movieId} = await params;
 
   const [movie, cast, suggestedMovies] = await Promise.all([
     fetchMovieDetails(movieId),
