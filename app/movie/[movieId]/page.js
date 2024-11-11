@@ -134,7 +134,7 @@ export default async function MovieDetailsPage({params}) {
       {/* Suggested Movies Section */}
       <div className="mt-10">
         <h2 className="text-3xl font-bold mb-6">Suggested Movies</h2>
-        <div className="grid grid-cols-auto gap-6">
+        <div className="grid grid-cols-auto gap-5">
           {suggestedMovies?.slice(0, 10).map((suggestedMovie) => (
             <MovieCard movie={suggestedMovie} key={suggestedMovie.id} />
           ))}

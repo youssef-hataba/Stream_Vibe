@@ -23,7 +23,7 @@ export const fetchMoviesByCategory = async (categoryId) => {
         with_genres: categoryId,
       },
     });
-    return response.data.results.slice(0, 10);
+    return response.data.results;
   } catch (error) {
     console.error("Error fetching movies:", error);
     return [];

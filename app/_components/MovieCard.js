@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {FaEye} from "react-icons/fa";
+import StarRating from "./StarRating";
 
 function MovieCard({movie}) {
   return (
@@ -15,17 +16,23 @@ function MovieCard({movie}) {
             />
           </div>
         </div>
-      </Link>
+      
       <div className="flex relative my-3 justify-between text-sm text-gray-60 before: font-semibold ">
         <h2 className="border border-black-15 rounded-full p-2 flex items-center gap-1">
-        {formatNumber(movie.popularity)}
+          {formatNumber(movie.popularity)}
           <FaEye />
         </h2>
-        <div className="border border-black-15 rounded-full p-2 flex flex-row text-red-45 gap-1 
-        items-center justify-center">
-          ★★★★☆ <span className="text-gray-60">{parseFloat(movie.vote_average.toFixed(1))/2}</span>
+        <div
+          className="border border-black-15 rounded-full p-2 flex flex-row text-red-45 gap-1 items-center justify-center">
+          <StarRating
+            actualRating={(movie.vote_average / 1.95)}
+            StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
+            pStyle="hidden"
+          />
+          <span className="text-gray-60">{parseFloat(movie.vote_average.toFixed(1)) / 2}</span>
         </div>
       </div>
+      </Link>
     </div>
   );
 }
