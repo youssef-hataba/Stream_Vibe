@@ -6,7 +6,7 @@ function MovieCard({movie}) {
   return (
     <div className="bg-black-10 rounded-lg px-4 min-w-[240px] overflow-hidden">
       <Link href={`/movie/${movie.id}`}>
-        <h2 className="text-xl font-semibold my-3 whitespace-nowrap">{movie.title}</h2>
+        <h2 className="text-l font-semibold my-3 whitespace-wrap">{movie.title}</h2>
         <div className="grid gap-2">
           <div className="movie-card">
             <img
@@ -37,7 +37,7 @@ function MovieCard({movie}) {
   );
 }
 
-function formatNumber(number) {
+export function formatNumber(number) {
   if (number >= 1_000_000) {
     return `${(number / 1_000_000).toFixed(1)}M`;
   }

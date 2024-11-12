@@ -1,17 +1,21 @@
-import {CiCalendar} from "react-icons/ci";
-import {IoLanguage} from "react-icons/io5";
-import {TbLayoutGrid} from "react-icons/tb";
-import {FaRegClock} from "react-icons/fa6";
-import {FaEye} from "react-icons/fa";
+import { CiCalendar } from "react-icons/ci";
+import { IoLanguage } from "react-icons/io5";
+import { TbLayoutGrid } from "react-icons/tb";
+import { FaRegClock } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa";
 import Link from "next/link";
-import {fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast} from "@/app/hooks/useMovies";
+import {
+  fetchMovieDetails,
+  fetchSuggestedMovies,
+  fetchMovieCast,
+} from "@/app/hooks/useMovies";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
-import {Spinner1} from "@/app/_components/Spinner";
+import { Spinner1 } from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
+import StarRating from "@/app/_components/StarRating";
 
-
-export default async function MovieDetailsPage({params}) {
-  const {movieId} = await params;
+export default async function MovieDetailsPage({ params }) {
+  const { movieId } = await params;
 
   const [movie, cast, suggestedMovies] = await Promise.all([
     fetchMovieDetails(movieId),
@@ -19,13 +23,12 @@ export default async function MovieDetailsPage({params}) {
     fetchSuggestedMovies(movieId),
   ]);
 
-
   if (!movie) return <Spinner1 />;
 
   return (
     <div className="bg-black-8 text-white">
       {/* Header Section with Image and Title */}
-        <MovieHeroBanner movie={movie} />
+      <MovieHeroBanner movie={movie} />
       {/* Main Content Section */}
       <div className="flex flex-col md:flex-row gap-5 mt-16">
         {/* Left Column */}
@@ -33,7 +36,9 @@ export default async function MovieDetailsPage({params}) {
           {/* Description Section */}
           <div className="bg-black-10 mb-5 p-8 rounded-lg border border-black-15">
             <h2 className="text-xl font-semibold text-gray-99">Description</h2>
-            <p className="mt-2 text-gray-60 font-mediu text-[18px] leading-7">{movie.overview}</p>
+            <p className="mt-2 text-gray-60 font-mediu text-[18px] leading-7">
+              {movie.overview}
+            </p>
           </div>
 
           {/* Cast Section */}
@@ -44,13 +49,18 @@ export default async function MovieDetailsPage({params}) {
                 {cast
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
-                    <div key={actor.cast_id} className="max-w-[100px] min-w-[80px] overflow-hidden">
+                    <div
+                      key={actor.cast_id}
+                      className="max-w-[100px] min-w-[80px] overflow-hidden"
+                    >
                       <img
                         src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
                         alt={actor.name}
                         className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
                       />
-                      <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
+                      <p className="mt-2 text-gray-300 text-xs mb-6">
+                        {actor.name}
+                      </p>
                     </div>
                   ))}
               </div>
@@ -62,9 +72,15 @@ export default async function MovieDetailsPage({params}) {
             <div className="mt-4 space-y-4">
               <div className="bg-black-10 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold">
-                  Ratings: <span className="text-sm text-gray-400">{movie.vote_average}</span>
+                  Ratings:{" "}
+                  <div className="mt-2 text-yellow-500">
+                    <StarRating
+                      actualRating={movie.vote_average / 1.95}
+                      StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
+                      pStyle="hidden"
+                    />
+                  </div>
                 </h3>
-                <div className="mt-2 text-yellow-500">★★★★☆</div>
               </div>
             </div>
           </div>
@@ -90,7 +106,8 @@ export default async function MovieDetailsPage({params}) {
               {movie.spoken_languages?.map((lang) => (
                 <span
                   key={lang.english_name}
-                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md">
+                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md"
+                >
                   {lang.english_name}
                 </span>
               ))}
@@ -106,7 +123,8 @@ export default async function MovieDetailsPage({params}) {
               {movie.genres?.map((genre) => (
                 <span
                   key={genre.name}
-                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md">
+                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md"
+                >
                   {genre.name}
                 </span>
               ))}
