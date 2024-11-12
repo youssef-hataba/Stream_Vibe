@@ -170,13 +170,3 @@
   font-weight: bold;
   margin-top: 1rem;
 }
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg) translate(0, -250%);
-  }
-  100% {
-    transform: rotate(360deg) translate(0, -250%);
-  }
-}
-

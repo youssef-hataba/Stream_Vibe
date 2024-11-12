@@ -4,7 +4,7 @@ import StarRating from "./StarRating";
 
 function MovieCard({movie}) {
   return (
-    <div className="bg-black-10 rounded-lg px-4 min-w-[240px] overflow-hidden">
+    <div className="bg-black-10 hover:animate-shadow-blackbg-black-500 rounded-lg px-4 min-w-[240px] overflow-hidden">
       <Link href={`/movie/${movie.id}`}>
         <h2 className="text-l font-semibold my-3 whitespace-wrap">{movie.title}</h2>
         <div className="grid gap-2">

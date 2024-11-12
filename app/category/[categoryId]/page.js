@@ -1,9 +1,11 @@
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 
-export default async function CategoryPage({ categoryId }) {
+export default async function CategoryPage({ params }) {
+    const { categoryId } = await params;
     const movies = await fetchMoviesByCategory(categoryId);
-    const genre = await fetchCategories(categoryId);
+    const categories = await fetchCategories();
+    const genre = categories.find((cat) => cat.id === parseInt(categoryId));
 
     return (
         <div className="mt-10">
@@ -21,7 +23,7 @@ function CategoryDetails({ genre }) {
     return (
         <div>
             <h2 className="text-2xl text-white font-semibold mb-4">
-                {genre?.name ? `Movies of ${genre.name} Category` : 'Loading...'}
+                {genre ? `Movies of ${genre.name} Category` : 'Loading...'}
             </h2>
         </div>
     );

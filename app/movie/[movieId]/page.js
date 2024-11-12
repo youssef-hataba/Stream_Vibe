@@ -70,21 +70,25 @@ export default async function MovieDetailsPage({ params }) {
           {/* Reviews Section */}
           <div className="bg-black-10 p-4 rounded-lg shadow">
             <div className="mt-4 space-y-4">
-              <div className="bg-black-10 p-4 rounded-lg">
+              <div className="bg-black-10 p-4 mb-4 rounded-lg">
                 <h3 className="text-lg font-semibold">
                   Ratings:{" "}
-                  <div className="mt-2 text-yellow-500">
+                  <div className="mt-2">
                     <StarRating
                       actualRating={movie.vote_average / 1.95}
                       StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
-                      pStyle="hidden"
-                    />
+                      pStyle="hidden"/>
                   </div>
                 </h3>
               </div>
             </div>
           </div>
+          <div className="bg-black-10 mt-5 p-8 rounded-lg border border-black-15 flex items-center justify-between lg:flex-row">
+            <h2 className="text-xl font-semibold text-gray-99">Reviews</h2>
+          <p className="bg-black-8 hover:bg-red-45 cursor-pointer border border-black-15 flex items-center text-white gap-2 px-4 py-2 rounded-lg w-auto lg:w-[12rem] justify-center">+ Add Your Review</p>
+          </div>
         </div>
+
 
         {/* Right Column */}
         <div className="space-y- bg-black-10 p-8 rounded-lg border border-black-15">
