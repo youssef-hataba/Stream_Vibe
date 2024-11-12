@@ -61,3 +61,12 @@ export async function fetchSuggestedMovies(movieId) {
     return [];
   }
 }
+
+
+export const fetchMovieReviews = async (movieId) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+  );
+  const data = await response.json();
+  return data.results || [];
+};

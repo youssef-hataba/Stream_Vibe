@@ -1,26 +1,23 @@
-import { CiCalendar } from "react-icons/ci";
-import { IoLanguage } from "react-icons/io5";
-import { TbLayoutGrid } from "react-icons/tb";
-import { FaRegClock } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
-import Link from "next/link";
-import {
-  fetchMovieDetails,
-  fetchSuggestedMovies,
-  fetchMovieCast,
-} from "@/app/hooks/useMovies";
+import {CiCalendar} from "react-icons/ci";
+import {IoLanguage} from "react-icons/io5";
+import {TbLayoutGrid} from "react-icons/tb";
+import {FaRegClock} from "react-icons/fa6";
+import {FaEye} from "react-icons/fa";
+import {FaRegStar} from "react-icons/fa";
+import { fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast, fetchMovieReviews } from "@/app/hooks/useMovies";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
-import { Spinner1 } from "@/app/_components/Spinner";
+import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
 import StarRating from "@/app/_components/StarRating";
 
-export default async function MovieDetailsPage({ params }) {
-  const { movieId } = await params;
+export default async function MovieDetailsPage({params}) {
+  const {movieId} = await params;
 
-  const [movie, cast, suggestedMovies] = await Promise.all([
+  const [movie, cast, suggestedMovies, reviews] = await Promise.all([
     fetchMovieDetails(movieId),
     fetchMovieCast(movieId),
     fetchSuggestedMovies(movieId),
+    fetchMovieReviews(movieId),
   ]);
 
   if (!movie) return <Spinner1 />;
@@ -36,9 +33,7 @@ export default async function MovieDetailsPage({ params }) {
           {/* Description Section */}
           <div className="bg-black-10 mb-5 p-8 rounded-lg border border-black-15">
             <h2 className="text-xl font-semibold text-gray-99">Description</h2>
-            <p className="mt-2 text-gray-60 font-mediu text-[18px] leading-7">
-              {movie.overview}
-            </p>
+            <p className="mt-2 text-gray-60 font-mediu text-[18px] leading-7">{movie.overview}</p>
           </div>
 
           {/* Cast Section */}
@@ -49,46 +44,19 @@ export default async function MovieDetailsPage({ params }) {
                 {cast
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
-                    <div
-                      key={actor.cast_id}
-                      className="max-w-[100px] min-w-[80px] overflow-hidden"
-                    >
+                    <div key={actor.cast_id} className="max-w-[100px] min-w-[80px] overflow-hidden">
                       <img
                         src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
                         alt={actor.name}
                         className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
                       />
-                      <p className="mt-2 text-gray-300 text-xs mb-6">
-                        {actor.name}
-                      </p>
+                      <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
                     </div>
                   ))}
               </div>
             </div>
           )}
-
-          {/* Reviews Section */}
-          <div className="bg-black-10 p-4 rounded-lg shadow">
-            <div className="mt-4 space-y-4">
-              <div className="bg-black-10 p-4 mb-4 rounded-lg">
-                <h3 className="text-lg font-semibold">
-                  Ratings:{" "}
-                  <div className="mt-2">
-                    <StarRating
-                      actualRating={movie.vote_average / 1.95}
-                      StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
-                      pStyle="hidden"/>
-                  </div>
-                </h3>
-              </div>
-            </div>
-          </div>
-          <div className="bg-black-10 mt-5 p-8 rounded-lg border border-black-15 flex items-center justify-between lg:flex-row">
-            <h2 className="text-xl font-semibold text-gray-99">Reviews</h2>
-          <p className="bg-black-8 hover:bg-red-45 cursor-pointer border border-black-15 flex items-center text-white gap-2 px-4 py-2 rounded-lg w-auto lg:w-[12rem] justify-center">+ Add Your Review</p>
-          </div>
         </div>
-
 
         {/* Right Column */}
         <div className="space-y- bg-black-10 p-8 rounded-lg border border-black-15">
@@ -110,12 +78,24 @@ export default async function MovieDetailsPage({ params }) {
               {movie.spoken_languages?.map((lang) => (
                 <span
                   key={lang.english_name}
-                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md"
-                >
+                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md">
                   {lang.english_name}
                 </span>
               ))}
             </div>
+          </div>
+
+          <div className="p-4 rounded-lg">
+            <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
+              <FaRegStar className="inline-block" size={18} />
+                Rating:
+            </h2>
+            <div className="border border-black-15 p-2 bg-black-8 rounded-md w-fit py-3">
+            <StarRating
+              actualRating={movie.vote_average / 1.95}
+              StartStyle="w-[20px] h-[5px] flex items-center"
+              pStyle="text-sm text-gray-60 font-semibold"
+            /></div>
           </div>
 
           <div className="p-4 rounded-lg">
@@ -127,8 +107,7 @@ export default async function MovieDetailsPage({ params }) {
               {movie.genres?.map((genre) => (
                 <span
                   key={genre.name}
-                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md"
-                >
+                  className="text-sm text-gray-90 border border-black-15 p-2 bg-black-8 rounded-md">
                   {genre.name}
                 </span>
               ))}
@@ -140,7 +119,7 @@ export default async function MovieDetailsPage({ params }) {
               <FaRegClock className="inline-block" size={18} />
               Duration:
             </h2>
-            <p className="text-gray-90">{movie.runtime} mins</p>
+            <p className="text-gray-90">{formatRuntime(movie.runtime)}</p>
           </div>
 
           <div className="p-4 rounded-lg">
@@ -165,3 +144,15 @@ export default async function MovieDetailsPage({ params }) {
     </div>
   );
 }
+
+
+const formatRuntime = (runtimeInMinutes) => {
+  const hours = Math.floor(runtimeInMinutes / 60);
+  const minutes = runtimeInMinutes % 60;
+  
+  const hoursText = hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''}` : '';
+  const minutesText = minutes > 0 ? `${minutes} min${minutes > 1 ? 's' : ''}` : '';
+
+  return `${hoursText}${hoursText && minutesText ? ', ' : ''}${minutesText}`;
+};
+

@@ -23,7 +23,7 @@ const StarRating = ({ StarsNumber = 5, pStyle, StartStyle, actualRating ,color="
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-1">
       <div className="flex">
         {Array.from({ length: StarsNumber }, (_, i) => (
           <div
@@ -44,7 +44,7 @@ const StarRating = ({ StarsNumber = 5, pStyle, StartStyle, actualRating ,color="
           </div>
         ))}
       </div>
-      <p className={`m-0 text-red-45 ${pStyle}`}>{displayRating.toFixed(1)}</p>
+      <p className={`m-0 ${pStyle}`}>{displayRating.toFixed(1)}</p>
     </div>
   );
 };

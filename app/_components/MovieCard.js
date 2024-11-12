@@ -4,17 +4,16 @@ import StarRating from "./StarRating";
 
 function MovieCard({movie}) {
   return (
-    <div className="bg-black-10 hover:animate-shadow-blackbg-black-500 rounded-lg px-4 min-w-[240px] overflow-hidden">
+    <div className="bg-black-10 hover:animate-shadow-black bg-black-500 rounded-lg px-4 min-w-[240px] 
+    overflow-hidden">
       <Link href={`/movie/${movie.id}`}>
-        <h2 className="text-l font-semibold my-3 whitespace-wrap">{movie.title}</h2>
-        <div className="grid gap-2">
-          <div className="movie-card">
+      <div className="overflow-hidden">
+        <h2 className="cursor-text text-l font-semibold my-3 whitespace-nowrap overflow-x-auto scrollbar-hide">{movie.title}</h2>
             <img
               src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
               alt={movie.title}
               className="w-full rounded-lg object-cover"
             />
-          </div>
         </div>
       
       <div className="flex relative my-3 justify-between text-sm text-gray-60 before: font-semibold ">

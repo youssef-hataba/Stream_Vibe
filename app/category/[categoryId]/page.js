@@ -22,7 +22,7 @@ export default async function CategoryPage({ params }) {
 function CategoryDetails({ genre }) {
     return (
         <div>
-            <h2 className="text-2xl text-white font-semibold mb-4">
+            <h2 className="text-2xl text-white font-semibold mb-12">
                 {genre ? `Movies of ${genre.name} Category` : 'Loading...'}
             </h2>
         </div>
