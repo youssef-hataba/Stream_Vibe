@@ -56,6 +56,12 @@ export default async function MovieDetailsPage({params}) {
               </div>
             </div>
           )}
+
+          {/* Add Rating */}
+          <div className="flex items-center justify-between bg-black-10 p-8 rounded-lg mb-6 border border-black-15">
+      <h2 className="text-xl font-semibold"><span className="text-xl">+</span> Add Your Rating</h2>
+      <StarRating />
+    </div>
         </div>
 
         {/* Right Column */}
@@ -88,9 +94,9 @@ export default async function MovieDetailsPage({params}) {
           <div className="p-4 rounded-lg">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
               <FaRegStar className="inline-block" size={18} />
-                Rating:
+                Ratings:
             </h2>
-            <div className="border border-black-15 p-2 bg-black-8 rounded-md w-fit py-3">
+            <div className="flex items-center justify-between gap-1.5 border border-black-15 p-2 bg-black-8 rounded-md w-fit py-3">
             {movie.vote_average > 0 ? (
               <StarRating
                 actualRating={movie.vote_average / 1.95}
@@ -106,7 +112,9 @@ export default async function MovieDetailsPage({params}) {
                 <FaRegStar className="inline-block" />
                 <span className="mx-2 text-gray-60">0</span>
               </span>
-            )}</div>
+            )}            
+            <span className="text-gray-60">{parseFloat(movie.vote_average.toFixed(1)) / 2}</span>
+            </div>
           </div>
 
           <div className="p-4 rounded-lg">
