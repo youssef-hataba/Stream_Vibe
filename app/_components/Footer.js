@@ -13,7 +13,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Home</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/categories" className="hover:text-red-45 text-gray-400">
+                <Link href="/CategoriesSection" className="hover:text-red-45 text-gray-400">
                   Categories
                 </Link>
               </li>

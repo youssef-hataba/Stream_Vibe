@@ -22,7 +22,7 @@ const MovieSlider = () => {
       } catch (error) {
         console.error("Error fetching movies:", error);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false); 
       }
     };
 
