@@ -1,7 +1,7 @@
 import {fetchMovies} from "../hooks/useMovies";
 import MovieCard from "./MovieCard";
 
-import SectionButtons from "./SectionButtons";
+import SectionButtons from "./buttons/SectionButtons";
 
 export default async function MovieSection({title, categoryPath}) {
   const movies = await fetchMovies(categoryPath);
@@ -22,4 +22,3 @@ export default async function MovieSection({title, categoryPath}) {
     </div>
   );
 }
-

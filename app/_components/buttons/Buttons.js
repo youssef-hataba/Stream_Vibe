@@ -27,7 +27,7 @@ export const PrevButton = ({onClick}) => {
   );
 };
 
-// Media Actions Component
+
 export const MediaActions = ({classes}) => {
   return (
     <div className="flex gap-4 flex-col lg:flex-row">
@@ -50,4 +50,4 @@ export const MediaActions = ({classes}) => {
   );
 };
 
-export default {NextButton, PrevButton, MediaActions};
+

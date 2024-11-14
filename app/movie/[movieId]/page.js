@@ -91,11 +91,22 @@ export default async function MovieDetailsPage({params}) {
                 Rating:
             </h2>
             <div className="border border-black-15 p-2 bg-black-8 rounded-md w-fit py-3">
-            <StarRating
-              actualRating={movie.vote_average / 1.95}
-              StartStyle="w-[20px] h-[5px] flex items-center"
-              pStyle="text-sm text-gray-60 font-semibold"
-            /></div>
+            {movie.vote_average > 0 ? (
+              <StarRating
+                actualRating={movie.vote_average / 1.95}
+                StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
+                pStyle="hidden"
+              />
+            ) : (
+              <span className="flex items-center text-red-45">
+                <FaRegStar className="inline-block" />
+                <FaRegStar className="inline-block" />
+                <FaRegStar className="inline-block" />
+                <FaRegStar className="inline-block" />
+                <FaRegStar className="inline-block" />
+                <span className="mx-2 text-gray-60">0</span>
+              </span>
+            )}</div>
           </div>
 
           <div className="p-4 rounded-lg">

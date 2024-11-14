@@ -1,5 +1,5 @@
-import { fetchCategories, fetchMoviesByCategory } from "../hooks/useCategories"; 
-import SectionButtons from "./SectionButtons";
+import {fetchCategories, fetchMoviesByCategory} from "../hooks/useCategories";
+import SectionButtons from "./buttons/SectionButtons";
 import Link from "next/link";
 
 export default async function CategoriesSection() {
@@ -11,14 +11,13 @@ export default async function CategoriesSection() {
         <h1 className="md:text-4xl text-[27px] font-bold">Movies Categories</h1>
 
         {/* Scroll buttons */}
-        <SectionButtons scrollId="scrollContainer"/>
+        <SectionButtons scrollId="scrollContainer" />
       </div>
 
       {/* Scrollable container */}
       <div
         id="scrollContainer"
-        className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth mt-12"
-      >
+        className="flex gap-5 overflow-x-auto scrollbar-hide scroll-smooth mt-12">
         {/* Looping through categories */}
         {categories.map((genre) => (
           <CategoryCard key={genre.id} genre={genre} />
@@ -29,21 +28,21 @@ export default async function CategoriesSection() {
 }
 
 // Category Card Component
-async function CategoryCard({ genre }) {
+async function CategoryCard({genre}) {
   const movies = await fetchMoviesByCategory(genre.id);
-  
+
   return (
     <div className="bg-black-10 rounded-lg p-4 min-w-[240px]">
       <Link href={`/category/${genre.id}`}>
-      <h2 className="text-2xl font-semibold mb-4">{genre.name}</h2>
-      <MoviesDisplay movies={movies.slice(0, 4)} />
+        <h2 className="text-2xl font-semibold mb-4">{genre.name}</h2>
+        <MoviesDisplay movies={movies.slice(0, 4)} />
       </Link>
     </div>
   );
 }
 
 // Movies Display Component
-function MoviesDisplay({ movies }) {
+function MoviesDisplay({movies}) {
   return (
     <div className="grid grid-cols-2 gap-2 ">
       {movies.map((movie) => (

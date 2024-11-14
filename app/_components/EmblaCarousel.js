@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, {useCallback, useEffect, useState} from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { PrevButton ,NextButton ,MediaActions } from "./Buttons";
+import {PrevButton, NextButton, MediaActions} from "./buttons/Buttons";
 import MovieHeroBanner from "./MovieHeroBanner";
 
 const EmblaCarousel = ({slides, options}) => {
@@ -83,7 +83,6 @@ const EmblaCarousel = ({slides, options}) => {
   const DotButton = ({onClick, className}) => (
     <button type="button" onClick={onClick} className={className} />
   );
-  
 
   return (
     <section className="embla">
@@ -91,7 +90,7 @@ const EmblaCarousel = ({slides, options}) => {
         <div className="embla__container">
           {slides.map((movie) => (
             <div className="embla__slide" key={movie.id}>
-              <MovieHeroBanner movie={movie} classes="hidden"/>
+              <MovieHeroBanner movie={movie} classes="hidden" />
             </div>
           ))}
         </div>

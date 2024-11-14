@@ -1,12 +1,13 @@
 "use client";
 
-import {MediaActions} from "@/app/_components/Buttons";
+
 import {useState, useEffect} from "react";
 import Link from "next/link";
 
 import Image from "next/image";
+import HeroSectionButtons from "./buttons/HeroSectionButtons";
 
-const MovieHeroBanner = ({movie,classes}) => {
+const MovieHeroBanner = ({movie, classes}) => {
   const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const MovieHeroBanner = ({movie,classes}) => {
           <h2>{movie.title}</h2>
           <p className="hidden lg:block ">{movie.overview}</p>
           <div className="flex justify-center">
-            <MediaActions classes={classes} />
+            <HeroSectionButtons classes={classes} movieId={movie.id} />
           </div>
         </div>
       </Link>

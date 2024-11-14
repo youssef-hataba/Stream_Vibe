@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.46.1",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "embla-carousel": "^8.3.0",
