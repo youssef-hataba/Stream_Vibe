@@ -4,7 +4,7 @@ import {TbLayoutGrid} from "react-icons/tb";
 import {FaRegClock} from "react-icons/fa6";
 import {FaEye} from "react-icons/fa";
 import {FaRegStar} from "react-icons/fa";
-import { fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast, fetchMovieReviews } from "@/app/hooks/useMovies";
+import { fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast } from "@/app/hooks/useMovies";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
 import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
@@ -17,7 +17,6 @@ export default async function MovieDetailsPage({params}) {
     fetchMovieDetails(movieId),
     fetchMovieCast(movieId),
     fetchSuggestedMovies(movieId),
-    fetchMovieReviews(movieId),
   ]);
 
   if (!movie) return <Spinner1 />;

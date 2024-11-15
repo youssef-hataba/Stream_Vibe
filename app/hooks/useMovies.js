@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_KEY = "63782fbca0fe61390d79a5375d4d5b59";
 const BASE_URL = "https://api.themoviedb.org/3";
+const YOUTUBE_API_KEY =' AIzaSyBeFXu14AWzzOA2q6MWMdgqtppBNLHghUQ ';
 
 // Fetch Movies by Category
 export async function fetchMovies(categoryPath) {
@@ -62,12 +63,23 @@ export async function fetchSuggestedMovies(movieId) {
   }
 }
 
+// Fetch Movie Trailer
+export async function fetchMovieTrailer(movieId) {
+  try {
+    const response = await axios.get(`${BASE_URL}/movie/${movieId}/videos`, {
+      params: { api_key: API_KEY },
+    });
 
-export const fetchMovieReviews = async (movieId) => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-  );
-  const data = await response.json();
-  return data.results || [];
-};
+    const trailers = response.data.results.filter(
+      (video) => video.type === "Trailer" && video.site === "YouTube"
+    );
+
+    return trailers.length > 0
+      ? `https://www.youtube.com/embed/${trailers[0].key}`
+      : null;
+  } catch (error) {
+    console.error("Error fetching movie trailer:", error.message);
+    return null;
+  }
+}
 
