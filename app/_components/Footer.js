@@ -5,7 +5,7 @@ import {FaTwitter} from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-black-6 text-white py-12 mt-20">
+    <footer className="bg-black-6 text-white py-12 mt-20 ">
       <div className="max-w-7xl mx-4 sm:mx-[6%]">
       <div className="grid grid-cols-2  md:grid-cols-5 gap-6">
           {/* First Column */}
@@ -13,27 +13,27 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Home</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/CategoriesSection" className="hover:text-red-45 text-gray-400">
+                <Link href="#categories-section" className="hover:text-red-45 text-gray-400">
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#herosection" className="hover:text-red-45 text-gray-400">
                   Hero
                 </Link>
               </li>
               <li>
-                <Link href="/trendingMovies" className="hover:text-red-45 text-gray-400">
+                <Link href="#trending-section" className="hover:text-red-45 text-gray-400">
                   Trending Movies
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#new-releases" className="hover:text-red-45 text-gray-400">
                   New Releases
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#must-watch" className="hover:text-red-45 text-gray-400">
                   Must Watch
                 </Link>
               </li>
@@ -45,25 +45,25 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Movies</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#categories-section" className="hover:text-red-45 text-gray-400">
                   Gernes
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#trending-section" className="hover:text-red-45 text-gray-400">
                   Trending
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-red-45 text-gray-400">
+                <Link href="#top-rated" className="hover:text-red-45 text-gray-400">
                   Popular
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Third Column */}
-          <div>
+{/* Third Column */}
+<div>
             <h3 className="text-lg font-semibold mb-4">Series</h3>
             <ul className="space-y-2">
               <li>
