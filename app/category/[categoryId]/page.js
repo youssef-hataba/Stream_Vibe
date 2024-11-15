@@ -1,7 +1,6 @@
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 import Link from 'next/link';
-import { NextButton, PrevButton } from '@/app/_components/Buttons';
 
 export default async function CategoryPage({ params, searchParams }) {
     const { categoryId } = await params;
