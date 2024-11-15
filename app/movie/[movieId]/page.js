@@ -5,18 +5,22 @@ import {FaRegClock} from "react-icons/fa6";
 import {FaEye} from "react-icons/fa";
 import {FaRegStar} from "react-icons/fa";
 import { fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast } from "@/app/hooks/useMovies";
+import {fetchActorDetails} from "@/app/hooks/useActorDetails";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
 import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
 import StarRating from "@/app/_components/StarRating";
+import Link from "next/link";
 
 export default async function MovieDetailsPage({params}) {
   const {movieId} = await params;
+  const { actorId } = await params; 
 
   const [movie, cast, suggestedMovies, reviews] = await Promise.all([
     fetchMovieDetails(movieId),
     fetchMovieCast(movieId),
     fetchSuggestedMovies(movieId),
+    fetchActorDetails(actorId),
   ]);
 
   if (!movie) return <Spinner1 />;
@@ -43,14 +47,16 @@ export default async function MovieDetailsPage({params}) {
                 {cast
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
-                    <div key={actor.cast_id} className="max-w-[100px] min-w-[80px] overflow-hidden">
-                      <img
-                        src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
-                        alt={actor.name}
-                        className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
-                      />
-                      <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
-                    </div>
+                    <Link key={actor.cast_id} href={`/actors/${actor.id}`}>
+            <div className="max-w-[100px] min-w-[80px] overflow-hidden cursor-pointer">
+              <img
+                src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
+                alt={actor.name}
+                className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
+              />
+              <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
+            </div>
+          </Link>
                   ))}
               </div>
             </div>

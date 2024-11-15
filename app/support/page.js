@@ -17,7 +17,7 @@ export default function SupportPage() {
   
   const [activeIndex, setActiveIndex] = useState(null);
   const toggleFaq = (index) => {
-    setActiveIndex(index === activeIndex ? null : index);
+    setActiveIndex(activeIndex === index ? null : index);
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 w-1200 h-580 mt-300 gap-8 p-8">
@@ -54,16 +54,11 @@ export default function SupportPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300">Phone Number</label>
-            <div className="col-span-2 flex gap-2 items-center">
           <PhoneInput
             country={'eg'} 
-            placeholder="Enter phone number"
-            inputClass="w-full p-2 rounded-md bg-black-8 text-gray-300"
-            buttonClass="bg-black-8 border border-gray-700"
-            dropdownClass="bg-gray-900 text-white"
-          />
+            inputClass="w-full mt-1 p-2 rounded-md bg-black-8 text-gray-300"/>
           </div>
-          </div>
+
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-300">Message</label>
@@ -77,18 +72,20 @@ export default function SupportPage() {
       </div>
        {/* FAQ Section */}
       <div className="col-span-1 md:col-span-2 mt-12">
-      <h2 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-      <div className="flex w-1280 h-76 gap-8 mb-6 ">
-        <p className="text-gray-400 mb-6">Got questions? We&apos;ve got answers! Check out our FAQ section to find answers to the most common questions about StreamVibe.</p>
-        <button className="mt-0 py-2 px-4 bg-red-600 text-white font-semibold rounded">Ask a Question</button>
+        <h2 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+        <div className="flex w-full gap-8 mb-6">
+          <p className="text-gray-400 mb-6">
+            Got questions? We&apos;ve got answers! Check out our FAQ section to find answers to the most common questions about StreamVibe.
+          </p>
+          <button className="mt-0 py-2 px-4 bg-red-600 text-white font-semibold rounded">Ask a Question</button>
         </div>
-        <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="grid grid-cols-2 gap-4">
           {faqs.map((faq, index) => (
-            <div key={faq.id} className="border border-gray-700 rounded ">
+            <div key={faq.id} className="border border-gray-700 rounded">
               <button
-                className="w-full flex justify-between items-center p-4 text-left focus:outline-none"
-                onClick={() => toggleFaq(index)}
-              >
+                className="w-full grid justify-between items-center p-4 text-left focus:outline-none"
+                onClick={() => toggleFaq(index)}>
                 <span className="text-lg text-white">{faq.question}</span>
                 <span className="text-xl text-white">{activeIndex === index ? '−' : '+'}</span>
               </button>

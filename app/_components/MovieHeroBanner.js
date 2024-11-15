@@ -17,7 +17,7 @@ const MovieHeroBanner = ({movie, classes}) => {
   if (isMobile === null) return null;
 
   return (
-    <div className="mb-20 relative">
+    <div id="herosection" className="mb-20 relative">
       <Link href={`/movie/${movie.id}`}>
         <div className="image-wrapper  rounded-[1rem] ">
           <Image

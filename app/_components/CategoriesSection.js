@@ -6,7 +6,7 @@ export default async function CategoriesSection() {
   const categories = await fetchCategories();
 
   return (
-    <div className="bg-black-8 mt-16 text-white relative">
+    <div id="categories-section" className="bg-black-8 mt-16 text-white relative">
       <div className="flex items-center justify-between">
         <h1 className="md:text-4xl text-[27px] font-bold">Movies Categories</h1>
 

@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { fetchMovieTrailer } from '@/app/hooks/useMovies';
 
-export default function TrailerPage({ params }) {
-  const { movieId } = params;
+export default  function TrailerPage({ params }) {
+  const { movieId } =  params;
   const [trailerUrl, setTrailerUrl] = useState(null);
 
   useEffect(() => {
