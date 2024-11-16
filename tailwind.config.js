@@ -52,11 +52,11 @@ module.exports = {
         scaleUp: {
           '0%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
-          '100%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.1)' },
         },
       },
       animation: {
-        'scaleUp': 'scaleUp 1.5s ease-in-out infinite',
+        'scaleUp': 'scaleUp 1.5s ease ',
       },
       gridTemplateColumns: {
         auto: "repeat(auto-fill, minmax(240px,1fr))",

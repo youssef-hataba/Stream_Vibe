@@ -1,6 +1,8 @@
+"use client";
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 import Link from 'next/link';
+import { NextButton, PrevButton } from '@/app/_components/buttons/Buttons';
 
 export default async function CategoryPage({ params, searchParams }) {
     const { categoryId } = await params; // Fix this line
@@ -45,27 +47,28 @@ function CategoryDetails({ genre }) {
 }
 
 function Pagination({ currentPage, totalPages, categoryId }) {
+    const handlePrevPage = () => {
+      if (currentPage > 1) {
+        window.location.href = `/category/${categoryId}?page=${currentPage - 1}`;
+      }
+    };
+  
+    const handleNextPage = () => {
+      if (currentPage < totalPages) {
+        window.location.href = `/category/${categoryId}?page=${currentPage + 1}`;
+      }
+    };
+  
     return (
-        <div className="flex justify-center mt-6">
-            {currentPage > 1 && (
-                <Link 
-                    href={`/category/${categoryId}?page=${currentPage - 1}`} // Fixed here
-                    className="px-4 py-2 mx-1 bg-red-45 text-white rounded"
-                >
-                    Previous
-                </Link>
-            )}
-            <span className="px-4 py-2 mx-1 text-white">
-                Page {currentPage} of {totalPages}
-            </span>
-            {currentPage < totalPages && (
-                <Link 
-                    href={`/category/${categoryId}?page=${currentPage + 1}`} // Fixed here
-                    className="px-4 py-2 mx-1 bg-red-45 text-white rounded"
-                >
-                    Next
-                </Link>
-            )}
-        </div>
+      <div className="embla__dots justify-center mt-8 flex items-center">
+        {currentPage > 1 && (
+          <PrevButton onClick={handlePrevPage} />
+        )}
+        
+        <span className="embla__dot mx-2">{currentPage}</span>
+        {currentPage < totalPages && (
+          <NextButton onClick={handleNextPage} />
+        )}
+      </div>
     );
-}
+  }
