@@ -1,22 +1,38 @@
-"use client";
+'use client';
+
+import React, { useState, useEffect } from 'react';  // تأكد من استيراد React
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 import Link from 'next/link';
 import { NextButton, PrevButton } from '@/app/_components/buttons/Buttons';
 
-export default async function CategoryPage({ params, searchParams }) {
-    const { categoryId } = await params; // Fix this line
-    const currentPage = await parseInt(searchParams.page || '1', 10);
-    const itemsPerPage = 10; // Removed extra backtick
+export default function CategoryPage({ params, searchParams }) {
+    const { categoryId } = React.use(params);  // فك التغليف حول params
+    const { page } = React.use(searchParams);  // فك التغليف حول searchParams
+    const currentPage = parseInt(page || '1', 10);  // استخدام page بعد فك التغليف
+    const itemsPerPage = 10;
 
-    const movies = await fetchMoviesByCategory(categoryId);
-    const categories = await fetchCategories();
-    const genre = categories.find((cat) => cat.id === parseInt(categoryId));
+    const [movies, setMovies] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [genre, setGenre] = useState(null);
 
-    // Movies count
+    useEffect(() => {
+        const loadData = async () => {
+            const fetchedCategories = await fetchCategories();
+            setCategories(fetchedCategories);
+
+            const fetchedMovies = await fetchMoviesByCategory(categoryId);
+            setMovies(fetchedMovies);
+
+            const foundGenre = fetchedCategories.find((cat) => cat.id === parseInt(categoryId));
+            setGenre(foundGenre);
+        };
+
+        loadData();
+    }, [categoryId]);
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedMovies = movies.slice(startIndex, startIndex + itemsPerPage);
-
     const totalPages = Math.ceil(movies.length / itemsPerPage);
 
     return (
@@ -64,8 +80,20 @@ function Pagination({ currentPage, totalPages, categoryId }) {
         {currentPage > 1 && (
           <PrevButton onClick={handlePrevPage} />
         )}
-        
-        <span className="embla__dot mx-2">{currentPage}</span>
+  
+        {[...Array(totalPages)].map((_, index) => {
+          const pageNumber = index + 1;
+          return (
+            <span
+              key={pageNumber}
+              className={`embla__dot mx-2 ${currentPage === pageNumber ? 'embla__dot--selected' : ''}`}
+              onClick={() => window.location.href = `/category/${categoryId}?page=${pageNumber}`}
+            >
+              {pageNumber}
+            </span>
+          );
+        })}
+  
         {currentPage < totalPages && (
           <NextButton onClick={handleNextPage} />
         )}
