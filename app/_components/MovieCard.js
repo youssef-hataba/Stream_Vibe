@@ -6,7 +6,7 @@ import StarRating from "./StarRating";
 function MovieCard({movie,style}) {
   return (
     <div
-      className={`bg-black-10 hover:animate-shadow-black bg-black-500 rounded-lg px-4 min-w-[240px] 
+      className={`bg-black-10 hover:animate-scaleUp bg-black-500 rounded-lg px-4 min-w-[240px] 
     overflow-hidden ${style}`}>
       <Link href={`/movie/${movie.id}`}>
         <div className="overflow-hidden">
@@ -16,7 +16,7 @@ function MovieCard({movie,style}) {
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
-            className="w-full rounded-lg object-cover hover:animate-scaleUp "
+            className="w-full rounded-lg object-cover "
           />
         </div>
 
