@@ -16,7 +16,6 @@ export default  function TrailerPage({ params }) {
 
   return (
     <div className="flex justify-center text-center">
-      <h1>Movie Trailer</h1>
       {trailerUrl ? (
         <iframe
           width="1080"

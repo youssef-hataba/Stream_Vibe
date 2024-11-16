@@ -4,23 +4,21 @@ import {TbLayoutGrid} from "react-icons/tb";
 import {FaRegClock} from "react-icons/fa6";
 import {FaEye} from "react-icons/fa";
 import {FaRegStar} from "react-icons/fa";
-import { fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast } from "@/app/hooks/useMovies";
-import {fetchActorDetails} from "@/app/hooks/useActorDetails";
+import {fetchMovieDetails, fetchSuggestedMovies, fetchMovieCast} from "@/app/hooks/useMovies";
 import MovieHeroBanner from "@/app/_components/MovieHeroBanner";
 import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
 import StarRating from "@/app/_components/StarRating";
 import Link from "next/link";
+import Rating from "@/app/_components/Rating";
 
 export default async function MovieDetailsPage({params}) {
   const {movieId} = await params;
-  const { actorId } = await params; 
 
-  const [movie, cast, suggestedMovies, reviews] = await Promise.all([
+  const [movie, cast, suggestedMovies] = await Promise.all([
     fetchMovieDetails(movieId),
     fetchMovieCast(movieId),
     fetchSuggestedMovies(movieId),
-    fetchActorDetails(actorId),
   ]);
 
   if (!movie) return <Spinner1 />;
@@ -48,25 +46,21 @@ export default async function MovieDetailsPage({params}) {
                   .filter((actor) => actor.profile_path) // Only display actors with profile images
                   .map((actor) => (
                     <Link key={actor.cast_id} href={`/actors/${actor.id}`}>
-            <div className="max-w-[100px] min-w-[80px] overflow-hidden cursor-pointer">
-              <img
-                src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
-                alt={actor.name}
-                className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
-              />
-              <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
-            </div>
-          </Link>
+                      <div className="max-w-[100px] min-w-[80px] overflow-hidden cursor-pointer">
+                        <img
+                          src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
+                          alt={actor.name}
+                          className="h-28 w-[90px] object-cover rounded-lg border border-black-15"
+                        />
+                        <p className="mt-2 text-gray-300 text-xs mb-6">{actor.name}</p>
+                      </div>
+                    </Link>
                   ))}
               </div>
             </div>
           )}
-
           {/* Add Rating */}
-          <div className="flex items-center justify-between bg-black-10 p-8 rounded-lg mb-6 border border-black-15">
-      <h2 className="text-xl font-semibold"><span className="text-xl">+</span> Add Your Rating</h2>
-      <StarRating />
-    </div>
+          <Rating movieId={movieId}/>
         </div>
 
         {/* Right Column */}
@@ -99,26 +93,26 @@ export default async function MovieDetailsPage({params}) {
           <div className="p-4 rounded-lg">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">
               <FaRegStar className="inline-block" size={18} />
-                Ratings:
+              Ratings:
             </h2>
             <div className="flex items-center justify-between gap-1.5 border border-black-15 p-2 bg-black-8 rounded-md w-fit py-3">
-            {movie.vote_average > 0 ? (
-              <StarRating
-                actualRating={movie.vote_average / 1.95}
-                StartStyle="w-[14px] h-[5px] bg-blue flex items-center bg-black-8"
-                pStyle="hidden"
-              />
-            ) : (
-              <span className="flex items-center text-red-45">
-                <FaRegStar className="inline-block" />
-                <FaRegStar className="inline-block" />
-                <FaRegStar className="inline-block" />
-                <FaRegStar className="inline-block" />
-                <FaRegStar className="inline-block" />
-                <span className="mx-2 text-gray-60">0</span>
-              </span>
-            )}            
-            <span className="text-gray-60">{parseFloat(movie.vote_average.toFixed(1)) / 2}</span>
+              {movie.vote_average > 0 ? (
+                <StarRating
+                  actualRating={movie.vote_average / 1.95}
+                  StartStyle="w-[20px] h-[8px] bg-blue flex items-center bg-black-8"
+                  pStyle="hidden"
+                />
+              ) : (
+                <span className="flex items-center text-red-45">
+                  <FaRegStar className="inline-block" />
+                  <FaRegStar className="inline-block" />
+                  <FaRegStar className="inline-block" />
+                  <FaRegStar className="inline-block" />
+                  <FaRegStar className="inline-block" />
+                  <span className="mx-2 text-gray-60">0</span>
+                </span>
+              )}
+              <span className="text-gray-60">{parseFloat(movie.vote_average.toFixed(1)) / 2}</span>
             </div>
           </div>
 
@@ -169,14 +163,12 @@ export default async function MovieDetailsPage({params}) {
   );
 }
 
-
 const formatRuntime = (runtimeInMinutes) => {
   const hours = Math.floor(runtimeInMinutes / 60);
   const minutes = runtimeInMinutes % 60;
-  
-  const hoursText = hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''}` : '';
-  const minutesText = minutes > 0 ? `${minutes} min${minutes > 1 ? 's' : ''}` : '';
 
-  return `${hoursText}${hoursText && minutesText ? ', ' : ''}${minutesText}`;
+  const hoursText = hours > 0 ? `${hours} hour${hours > 1 ? "s" : ""}` : "";
+  const minutesText = minutes > 0 ? `${minutes} min${minutes > 1 ? "s" : ""}` : "";
+
+  return `${hoursText}${hoursText && minutesText ? ", " : ""}${minutesText}`;
 };
-

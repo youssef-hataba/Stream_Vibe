@@ -27,7 +27,6 @@ const Navbar = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
     });
-
     return () => {
       authListener?.subscription.unsubscribe();
     };

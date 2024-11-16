@@ -16,7 +16,7 @@ const HeroSectionButtons = ({ classes, movieId }) => {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           const { data: profileData, error } = await supabase
-            .from("Users")
+            .from("users")
             .select("watchlist, favorites")
             .eq("email", user.email)
             .single();
@@ -87,9 +87,9 @@ const HeroSectionButtons = ({ classes, movieId }) => {
             toggleWatchlist();
           }}>
           {userLists.watchlist.includes(movieId) ? (
-            <BsBookmarkFill className="text-yellow-600" size={18} />
+            <BsBookmarkFill className="text-yellow-600 duration-200 transition-all transform group-hover:scale-125" size={18} />
           ) : (
-            <BsBookmark size={18} />
+            <BsBookmark className="duration-200 transition-all transform group-hover:scale-125" size={18} />
           )}
         </button>
         <button 

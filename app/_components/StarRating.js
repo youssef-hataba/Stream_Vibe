@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const StarRating = ({ StarsNumber = 5, pStyle, StartStyle, actualRating ,color="#F59E0B"}) => {
-  const [rating, setRating] = useState(0);
+const StarRating = ({rating,setRating, StarsNumber = 5, pStyle, StartStyle, actualRating ,color="#E50000"}) => {
   const [hoverRating, setHoverRating] = useState(0);
 
   const displayRating =  actualRating || hoverRating || rating || 0;

@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import {useState, useEffect, useCallback} from "react";
+import {useRouter} from "next/navigation";
 import supabase from "@/app/lib/supabaseClient";
-import { fetchMovieDetails } from "@/app/hooks/useMovies";
-import { Spinner1 } from "../_components/Spinner";
+import {fetchMovieDetails} from "@/app/hooks/useMovies";
+import {Spinner1} from "../_components/Spinner";
 import Section from "../_components/profile/Section";
 import ProfileHeader from "../_components/profile/ProfileHeader";
-import { updateUserFavorites, updateUserWatchlist } from "../lib/services/profileService";
-import { fetchMoviesFromIds } from "../lib/services/movieService";
-
+import {updateUserFavorites, updateUserWatchlist} from "../lib/services/profileService";
+import {fetchMoviesFromIds} from "../lib/services/movieService";
 
 function ProfilePage() {
   const router = useRouter();
@@ -30,7 +29,7 @@ function ProfilePage() {
     } catch (error) {
       handleError(error);
     }
-  },[]);
+  }, []);
 
   const fetchMoviesFromFavorites = useCallback(async (movieIds) => {
     try {
@@ -39,7 +38,7 @@ function ProfilePage() {
     } catch (error) {
       handleError(error);
     }
-  },[]);
+  }, []);
 
   const fetchRatedMovies = useCallback(async (ratingsData) => {
     try {
@@ -47,21 +46,23 @@ function ProfilePage() {
       const movies = await Promise.all(
         ratedMovieIds.map(async (movieId) => {
           const movie = await fetchMovieDetails(movieId);
-          return { ...movie, rating: ratingsData[movieId] };
+          return {...movie, rating: ratingsData[movieId]};
         })
       );
       setRatedMovies(movies.filter(Boolean));
     } catch (error) {
       handleError(error);
     }
-  },[]);
+  }, []);
 
   const fetchUserProfile = useCallback(async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: {user},
+      } = await supabase.auth.getUser();
       if (user) {
-        const { data: profileData, error } = await supabase
-          .from("Users")
+        const {data: profileData, error} = await supabase
+          .from("users")
           .select("*")
           .eq("email", user.email)
           .single();
@@ -85,7 +86,7 @@ function ProfilePage() {
     try {
       const updatedWatchlist = [...(profile.watchlist || []), movieId];
       await updateUserWatchlist(profile.email, updatedWatchlist);
-      setProfile({ ...profile, watchlist: updatedWatchlist });
+      setProfile({...profile, watchlist: updatedWatchlist});
       setWatchlistMovies(await fetchMoviesFromIds(updatedWatchlist));
     } catch (error) {
       console.error("Error:", error);
@@ -96,7 +97,7 @@ function ProfilePage() {
     try {
       const updatedWatchlist = (profile.watchlist || []).filter((id) => id !== movieId);
       await updateUserWatchlist(profile.email, updatedWatchlist);
-      setProfile({ ...profile, watchlist: updatedWatchlist });
+      setProfile({...profile, watchlist: updatedWatchlist});
       setWatchlistMovies(await fetchMoviesFromIds(updatedWatchlist));
     } catch (error) {
       console.error("Error:", error);
@@ -107,7 +108,7 @@ function ProfilePage() {
     try {
       const updatedFavorites = [...(profile.favorites || []), movieId];
       await updateUserFavorites(profile.email, updatedFavorites);
-      setProfile({ ...profile, favorites: updatedFavorites });
+      setProfile({...profile, favorites: updatedFavorites});
       setFavoriteMovies(await fetchMoviesFromIds(updatedFavorites));
     } catch (error) {
       console.error("Error:", error);
@@ -118,7 +119,7 @@ function ProfilePage() {
     try {
       const updatedFavorites = (profile.favorites || []).filter((id) => id !== movieId);
       await updateUserFavorites(profile.email, updatedFavorites);
-      setProfile({ ...profile, favorites: updatedFavorites });
+      setProfile({...profile, favorites: updatedFavorites});
       setFavoriteMovies(await fetchMoviesFromIds(updatedFavorites));
     } catch (error) {
       console.error("Error:", error);
@@ -136,52 +137,52 @@ function ProfilePage() {
 
   return (
     <div className="text-gray-80">
-      {profile ? (
+      <div>
         <div>
-          <div>
-            <ProfileHeader name={profile.name} email={profile.email} handleLogout={handleLogout} />
-          </div>
-          <div>
-          <Section
-            title="Watchlist"
-            movies={watchlistMovies}
-            favoriteMovies={favoriteMovies}
-            watchlistMovies={watchlistMovies}
-            ratings={ratings}
-            handleAddToWatchlist={handleAddToWatchlist}
-            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-            handleAddToFavorites={handleAddToFavorites}
-            handleRemoveFromFavorites={handleRemoveFromFavorites}
-          />
-          <Section
-            title="Favorites"
-            movies={favoriteMovies}
-            favoriteMovies={favoriteMovies}
-            watchlistMovies={watchlistMovies}
-            ratings={ratings}
-            handleAddToWatchlist={handleAddToWatchlist}
-            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-            handleAddToFavorites={handleAddToFavorites}
-            handleRemoveFromFavorites={handleRemoveFromFavorites}
-          />
-          <Section
-            title="Ratings"
-            movies={ratedMovies}
-            favoriteMovies={favoriteMovies}
-            watchlistMovies={watchlistMovies}
-            ratings={ratings}
-            handleAddToWatchlist={handleAddToWatchlist}
-            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-            handleAddToFavorites={handleAddToFavorites}
-            handleRemoveFromFavorites={handleRemoveFromFavorites}
-          />
-          </div>
+          <ProfileHeader name={profile?.name} email={profile?.email} handleLogout={handleLogout} />
         </div>
-      ) : (
-        <Spinner1 />
-      )}
+        {profile ? (
+          <div>
+            <Section
+              title="Watchlist"
+              movies={watchlistMovies}
+              favoriteMovies={favoriteMovies}
+              watchlistMovies={watchlistMovies}
+              ratings={ratings}
+              handleAddToWatchlist={handleAddToWatchlist}
+              handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+              handleAddToFavorites={handleAddToFavorites}
+              handleRemoveFromFavorites={handleRemoveFromFavorites}
+            />
+            <Section
+              title="Favorites"
+              movies={favoriteMovies}
+              favoriteMovies={favoriteMovies}
+              watchlistMovies={watchlistMovies}
+              ratings={ratings}
+              handleAddToWatchlist={handleAddToWatchlist}
+              handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+              handleAddToFavorites={handleAddToFavorites}
+              handleRemoveFromFavorites={handleRemoveFromFavorites}
+            />
+            <Section
+              title="Ratings"
+              movies={ratedMovies}
+              favoriteMovies={favoriteMovies}
+              watchlistMovies={watchlistMovies}
+              ratings={ratings}
+              handleAddToWatchlist={handleAddToWatchlist}
+              handleRemoveFromWatchlist={handleRemoveFromWatchlist}
+              handleAddToFavorites={handleAddToFavorites}
+              handleRemoveFromFavorites={handleRemoveFromFavorites}
+            />
+          </div>
+        ) : (
+          <Spinner1 />
+        )}
+      </div>
     </div>
   );
 }
 
-export default ProfilePage; 
+export default ProfilePage;
