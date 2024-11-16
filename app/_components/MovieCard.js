@@ -16,7 +16,7 @@ function MovieCard({movie,style}) {
           <img
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
-            className="w-full rounded-lg object-cover"
+            className="w-full rounded-lg object-cover hover:animate-scaleUp "
           />
         </div>
 

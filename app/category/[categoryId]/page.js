@@ -1,11 +1,10 @@
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 import Link from 'next/link';
-import { NextButton, PrevButton } from '@/app/_components/buttons/Buttons';
 
 export default async function CategoryPage({ params, searchParams }) {
-    const { categoryId } = await params;
-    const currentPage = await parseInt(searchParams.page || '1', 10);
+    const { categoryId } = await  params;
+    const currentPage =  await  parseInt(searchParams.page || '1', 10);
     const itemsPerPage = 10; ``
 
     const movies = await fetchMoviesByCategory(categoryId);
@@ -26,11 +25,7 @@ export default async function CategoryPage({ params, searchParams }) {
                     <MovieCard movie={movie} key={movie.id} />
                 ))}
             </div>
-            <Pagination 
-                currentPage={currentPage} 
-                totalPages={totalPages} 
-                categoryId={categoryId} 
-            />
+            
         </div>
     );
 }
@@ -45,28 +40,3 @@ function CategoryDetails({ genre }) {
     );
 }
 
-function Pagination({ currentPage, totalPages, categoryId }) {
-    return (
-        <div className="flex justify-center mt-6">
-            {currentPage > 1 && (
-                <Link 
-                    href={`/category/${categoryId}?page=${currentPage - 1}`}
-                    className="px-4 py-2 mx-1 bg-red-45 text-white rounded"
-                >
-                    Previous
-                </Link>
-            )}
-            <span className="px-4 py-2 mx-1 text-white">
-                Page {currentPage} of {totalPages}
-            </span>
-            {currentPage < totalPages && (
-                <Link 
-                    href={`/category/${categoryId}?page=${currentPage + 1}`}
-                    className="px-4 py-2 mx-1 bg-red-45 text-white rounded"
-                >
-                    Next
-                </Link>
-            )}
-        </div>
-    );
-}
