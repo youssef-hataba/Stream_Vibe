@@ -28,7 +28,7 @@ export default function ActorDetailsPage({ params }) {
         <img
           src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
           alt={actor.name}
-          className="w-60 h-auto rounded-lg border border-black-15"
+          className="w-55 h-60 rounded-lg border border-black-15"
         />
         <div>
           <h1 className="text-3xl font-bold mb-4">{actor.name}</h1>
@@ -37,9 +37,9 @@ export default function ActorDetailsPage({ params }) {
         </div>
       </div>
 
-      <h2 className="text-3xl font-bold mb-6 mt-8">Known For</h2>
-<div className="grid grid-cols-auto gap-5">
-{(actor.movie_credits?.cast.slice(0, 8) || []).map((movie) => (
+      <h2 className="text-3xl font-bold mb-6 mt-10">Known For</h2>
+<div className="grid grid-cols-5 gap-5">
+{(actor.movie_credits?.cast.slice(0, 10) || []).map((movie) => (
     <MovieCard movie={movie} key={movie.id} /> 
   ))}
       </div>

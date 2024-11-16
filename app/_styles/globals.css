@@ -170,3 +170,7 @@
   font-weight: bold;
   margin-top: 1rem;
 }
+
+.phone-input-container .special-label {
+  display: none;
+}

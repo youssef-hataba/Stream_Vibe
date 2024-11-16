@@ -1,6 +1,5 @@
 import {fetchMovies} from "../hooks/useMovies";
 import MovieCard from "./MovieCard";
-
 import SectionButtons from "./buttons/SectionButtons";
 
 export default async function MovieSection({title, categoryPath, id}) {

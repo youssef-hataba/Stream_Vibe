@@ -43,7 +43,7 @@ export default async function MovieDetailsPage({params}) {
               <h2 className="text-xl font-semibold">Cast</h2>
               <div className="flex gap-3 overflow-x-auto scroll-smooth pt-7">
                 {cast
-                  .filter((actor) => actor.profile_path) // Only display actors with profile images
+                  .filter((actor) => actor.profile_path) 
                   .map((actor) => (
                     <Link key={actor.cast_id} href={`/actors/${actor.id}`}>
                       <div className="max-w-[100px] min-w-[80px] overflow-hidden cursor-pointer">

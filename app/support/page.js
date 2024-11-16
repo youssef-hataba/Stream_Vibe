@@ -56,7 +56,9 @@ export default function SupportPage() {
             <label className="block text-sm font-medium text-gray-300">Phone Number</label>
           <PhoneInput
             country={'eg'} 
-            inputClass="w-full mt-1 p-2 rounded-md bg-black-8 text-gray-300"/>
+            inputClass="w-full mt-1 p-2 rounded-md bg-black-8 text-gray-300"
+            containerClass="phone-input-container"
+            />
           </div>
 
         </div>
