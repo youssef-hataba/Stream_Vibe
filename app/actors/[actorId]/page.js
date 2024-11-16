@@ -38,8 +38,8 @@ export default function ActorDetailsPage({ params }) {
       </div>
 
       <h2 className="text-3xl font-bold mb-6 mt-8">Known For</h2>
-<div className="grid grid-cols-auto gap-5">
-{(actor.movie_credits?.cast.slice(0, 8) || []).map((movie) => (
+<div className="grid grid-cols-5 gap-5">
+{(actor.movie_credits?.cast.slice(0, 10) || []).map((movie) => (
     <MovieCard movie={movie} key={movie.id} /> 
   ))}
       </div>

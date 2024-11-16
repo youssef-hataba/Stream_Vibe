@@ -1,15 +1,14 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';  // تأكد من استيراد React
+import React, { useState, useEffect } from 'react';
 import { fetchMoviesByCategory, fetchCategories } from '@/app/hooks/useCategories';
 import MovieCard from "@/app/_components/MovieCard";
 import Link from 'next/link';
 import { NextButton, PrevButton } from '@/app/_components/buttons/Buttons';
 
 export default function CategoryPage({ params, searchParams }) {
-    const { categoryId } = React.use(params);  // فك التغليف حول params
-    const { page } = React.use(searchParams);  // فك التغليف حول searchParams
-    const currentPage = parseInt(page || '1', 10);  // استخدام page بعد فك التغليف
+    const { categoryId } = React.use(params);  
+    const { page } = React.use(searchParams); 
+    const currentPage = parseInt(page || '1', 10);  
     const itemsPerPage = 10;
 
     const [movies, setMovies] = useState([]);
