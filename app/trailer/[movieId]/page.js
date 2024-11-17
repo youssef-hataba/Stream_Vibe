@@ -1,21 +1,40 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { fetchMovieTrailer } from '@/app/hooks/useMovies';
+import { PrevButton } from "@/app/_components/buttons/Buttons";
 
-export default  function TrailerPage({ params }) {
-  const { movieId } =  params;
+export default function TrailerPage({ params }) {
+  const router = useRouter();
+  const [movieId, setMovieId] = useState(null);
   const [trailerUrl, setTrailerUrl] = useState(null);
 
   useEffect(() => {
-    const fetchTrailer = async () => {
-      const url = await fetchMovieTrailer(movieId);
-      setTrailerUrl(url);
-    };
-    fetchTrailer();
+    async function unwrapParams() {
+      const resolvedParams = await params;
+      setMovieId(resolvedParams.movieId); 
+    }
+
+    unwrapParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (movieId) {
+      const fetchTrailer = async () => {
+        const url = await fetchMovieTrailer(movieId);
+        setTrailerUrl(url);
+      };
+      fetchTrailer();
+    }
   }, [movieId]);
 
+  const handlePrevPage = () => {
+    router.push(`/movie/${movieId}`); 
+  };
+
   return (
-    <div className="flex justify-center text-center">
+    <div className="flex gap-4 justify-center text-center">
+      <PrevButton onClick={handlePrevPage} />
       {trailerUrl ? (
         <iframe
           width="1080"

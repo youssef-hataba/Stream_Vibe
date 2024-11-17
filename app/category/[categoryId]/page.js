@@ -54,7 +54,7 @@ export default function CategoryPage({ params, searchParams }) {
 function CategoryDetails({ genre }) {
     return (
         <div>
-            <h2 className="text-2xl text-white font-semibold mb-12">
+            <h2 className="text-[27px] md:text-4xl font-bold text-white mb-12">
                 {genre ? `Movies of ${genre.name} Category` : 'Loading...'}
             </h2>
         </div>

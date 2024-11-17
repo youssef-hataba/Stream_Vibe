@@ -79,6 +79,7 @@ const HeroSectionButtons = ({ classes, movieId }) => {
         Play Now
       </button>
 </Link>
+      
       <div className="flex gap-4 justify-center">
         <button
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
