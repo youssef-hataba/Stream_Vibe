@@ -78,9 +78,8 @@ const HeroSectionButtons = ({ classes, movieId }) => {
       <button
         onClick={handleClick}
         className={`bg-red-45 flex text-white gap-2 justify-center rounded-lg 
-                items-center w-[19.5rem] lg:w-[8rem] h-[3rem] group ${classes}`}
-      >
-        <FaPlay className="transition-transform duration-500 transform group-hover:scale-150" />
+                items-center w-[19.5rem] lg:w-[8rem] h-[3rem] group ${classes}`}>
+        <FaPlay />
         Play Now
       </button>
 

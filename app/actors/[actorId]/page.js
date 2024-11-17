@@ -23,7 +23,7 @@ export default function ActorDetailsPage({ params }) {
   if (!actor) return <p>No data available for this actor.</p>;
 
   return (
-    <div className="bg-black-8 text-white p-10">
+    <div className="bg-black-8 text-white ">
       <div className="flex flex-col md:flex-row items-center gap-10">
         <img
           src={`https://image.tmdb.org/t/p/w300/${actor.profile_path}`}
@@ -36,9 +36,8 @@ export default function ActorDetailsPage({ params }) {
           <p className="text-white mb-6">Biography: <span className="text-gray-60">{actor.biography}</span></p>
         </div>
       </div>
-
-      <h2 className="text-3xl font-bold mb-6 mt-10">Known For</h2>
-<div className="grid grid-cols-5 gap-5">
+      <h2 className="text-[27px] md:text-4xl font-bold mb-6 mt-10">Known For</h2>
+<div className="grid grid-cols-auto gap-4">
 {(actor.movie_credits?.cast.slice(0, 10) || []).map((movie) => (
     <MovieCard movie={movie} key={movie.id} /> 
   ))}
