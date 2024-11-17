@@ -5,10 +5,10 @@ import { FaHeart } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa6";
 import supabase from "@/app/lib/supabaseClient";
 import { updateUserFavorites, updateUserWatchlist } from "@/app/lib/services/profileService";
-import Link from "next/link";
 
 const HeroSectionButtons = ({ classes, movieId }) => {
   const [userLists, setUserLists] = useState({ watchlist: [], favorites: [] });
+
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -69,35 +69,43 @@ const HeroSectionButtons = ({ classes, movieId }) => {
     }
   };
 
+  const handleClick = () => {
+    window.location.href = `/trailer/${movieId}`;
+  };
+
   return (
     <div className="flex gap-4 flex-col lg:flex-row">
-  <Link href={`/trailer/${movieId}`}>
       <button
+        onClick={handleClick}
         className={`bg-red-45 flex text-white gap-2 justify-center rounded-lg 
-                items-center w-[19.5rem] lg:w-[8rem] h-[3rem] group ${classes}`}>
+                items-center w-[19.5rem] lg:w-[8rem] h-[3rem] group ${classes}`}
+      >
         <FaPlay className="transition-transform duration-500 transform group-hover:scale-150" />
         Play Now
       </button>
-</Link>
+
       <div className="flex gap-4 justify-center">
         <button
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
           onClick={(e) => {
             e.preventDefault();
             toggleWatchlist();
-          }}>
+          }}
+        >
           {userLists.watchlist.includes(movieId) ? (
             <BsBookmarkFill className="text-yellow-600 duration-200 transition-all transform group-hover:scale-125" size={18} />
           ) : (
             <BsBookmark className="duration-200 transition-all transform group-hover:scale-125" size={18} />
           )}
         </button>
-        <button 
+
+        <button
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
           onClick={(e) => {
             e.preventDefault();
             toggleFavorites();
-          }}>
+          }}
+        >
           <FaHeart
             className={`duration-200 transition-all transform group-hover:scale-125 ${
               userLists.favorites.includes(movieId) ? "text-red-45" : ""

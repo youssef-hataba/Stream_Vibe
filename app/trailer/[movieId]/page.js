@@ -1,9 +1,13 @@
 "use client";
+import React from 'react'; 
 import { useEffect, useState } from "react";
 import { fetchMovieTrailer } from '@/app/hooks/useMovies';
+import { Spinner1 } from '@/app/_components/Spinner';
 
-export default  function TrailerPage({ params }) {
-  const { movieId } =  params;
+
+
+export default   function TrailerPage({ params }) {
+  const { movieId } = React.use(params);
   const [trailerUrl, setTrailerUrl] = useState(null);
 
   useEffect(() => {
@@ -27,7 +31,7 @@ export default  function TrailerPage({ params }) {
           allowFullScreen
         ></iframe>
       ) : (
-        <p>Trailer not available</p>
+          <Spinner1/>
       )}
     </div>
   );
