@@ -24,7 +24,6 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v12 or later)
 - [Git](https://git-scm.com/)
 
 ### Installation
