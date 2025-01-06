@@ -24,7 +24,6 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v12 or later)
 - [Git](https://git-scm.com/)
 
 ### Installation
@@ -66,3 +65,5 @@ Contributions are welcome! Please follow these steps to contribute:
 3. Commit your changes (`git commit -m 'Add some feature'`).
 4. Push to the branch (`git push origin feature/YourFeature`).
 5. Open a pull request.
+# Stream-Vibe
+# Stream-Vibe
