@@ -15,11 +15,9 @@ const MovieHeroBanner = ({ movie, classes }) => {
 
   if (isMobile === null) return null;
 
- 
   const handleMovieClick = () => {
     router.push(`/movie/${movie.id}`);
   };
-
 
   const handleTrailerClick = () => {
     router.push(`/trailer/${movie.id}`);

@@ -49,33 +49,6 @@ function MovieCard({ movie, style }) {
           </motion.div>
         </motion.div>
       </Link>
-
-      {/* Movie details card (animated with movement and fantastic effect) */}
-      <Link href={`/movie/${movie.id}`}>
-      <motion.div
-        className="bg-black-10 absolute top-0 left-0 right-0 bottom-0 rounded-lg flex items-center justify-center p-4"
-        initial={{ opacity: 0, scale: 0.95, rotate: 30 ,x:0 , y:0 }} // Start with small scale, and some offset
-        whileHover={{
-          opacity: 1,           
-          scale: 1,                 
-          rotate: 0,         
-        }}
-        transition={{
-          duration: 0.5,
-          ease: "easeOut",
-        }}
-      >
-        <div className="text-center w-full h-full flex flex-col justify-between py-4">
-          <h3 className="text-xl font-semibold text-red-50">{movie.title}</h3>
-          <p className="text-sm my-4 text-justify text-gray-70">
-          {movie.overview.split(" ").slice(0, 65).join(" ")}{movie.overview.split(" ").length > 65 && "..."}
-          </p>
-          <div className="flex flex-col gap-2 text-gray-300">
-            <span className="text-gray-60"><strong className="text-yellow-600">Release Date:</strong> {movie.release_date}</span>
-          </div>
-        </div>
-      </motion.div>
-      </Link>
     </motion.div>
   
   );
