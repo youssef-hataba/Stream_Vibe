@@ -2,16 +2,16 @@
 
 import Link from "next/link";
 import Search from "./Search";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {AiOutlineUser} from "react-icons/ai";
-import supabase from "@/app/lib/supabaseClient";
+import { useUser } from "@/app/context/UserContext";
+import Image from "next/image";
 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
-
+  const { user, loading } = useUser();
 
   const classes = isOpen ? "" : "hidden lg:block";
 
@@ -19,25 +19,13 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  // Fetch the user session
-  useEffect(() => {
-    const session = supabase.auth.getSession();
-    setUser(session?.user || null);
-
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-    });
-    return () => {
-      authListener?.subscription.unsubscribe();
-    };
-  }, []);
 
   return (
     <nav className="mx-4 sm:mx-[6%] flex items-center justify-between pt-[20px] pb-[30px]">
       {/* Logo */}
       {!isOpen && (
         <Link href="/">
-          <img src="/Logo.svg" alt="logo" className="h-[46px]" />
+        <Image src="/Logo.svg" alt="logo" height={46} width={153}/>
         </Link>
       )}
 
@@ -49,11 +37,21 @@ const Navbar = () => {
         <FaSearch className="text-red-45 lg:hidden" size={25} onClick={handleOpen} />
 
         {/* Conditional Rendering based on user session */}
-        {!isOpen && (
+        {!isOpen && !loading &&(
           <>
             {user ? (
-              <Link href="/profile" className="p-1 rounded-full bg-black-15">
-                <AiOutlineUser className="text-red-45 opacity-[80%] text-3xl" />
+              <Link href="/profile" aria-label="User profile" className="p-1 rounded-full bg-black-15">
+                {user.profilePic ? (
+                  <Image
+                    src={user.profilePic}
+                    alt="User profilePic"
+                    width={36}
+                    height={36}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <AiOutlineUser className="text-red-45 opacity-[80%] text-3xl" />
+                )}
               </Link>
             ) : (
               <Link href="/auth/login">

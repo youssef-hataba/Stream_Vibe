@@ -3,16 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import supabase from "@/app/lib/supabaseClient";
 import MovieWall from "@/app/_components/MovieWall";
+import Image from "next/image";
 
-const usernameRegex = /^(?=.{3,16}$)(?![_\.])[a-zA-Z0-9._]+(?<![_\.])$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -24,42 +24,37 @@ export default function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
+
+    const { firstName, lastName, email, password } = formData;
+
+    if (!emailRegex.test(email)) {
+      return setError("Invalid email format.");
+    }
+    // if (!passwordRegex.test(password)) {
+    //   return setError("Password must be 6+ chars, with uppercase, lowercase, number, and special character.");
+    // }
+
     setIsLoading(true);
-  
+
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-      }, {
-        data: {
-          name: formData.username,
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ firstName, lastName, email, password }),
+        credentials: "include",
       });
-  
-      if (authError) {
-        setError(authError.message);
-        setIsLoading(false);
-        return;
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Registration failed.");
       }
-  
-      // Insert user details in the Users table, including the auth_user_id
-      const { data, error } = await supabase
-        .from("users")
-        .insert([{
-          id: authData.user.id, // Use the user's ID from Supabase Auth
-          name: formData.username,
-          email: formData.email,
-          password: formData.password, // Storing password like this is insecure!
-        }])
-        .select();
-  
-      if (error) {
-        setError(error.message);
-      } else {
-        router.push("/"); // Redirect to another page after successful registration
-      }
+
+      router.push("/"); // Redirect after success
     } catch (error) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -67,15 +62,15 @@ export default function RegisterPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <div className="w-screen min-h-screen z-10 absolute left-0 top-0 flex items-center justify-center bg-black-6">
-      <MovieWall />
+      {/* <MovieWall /> */}
       <div className="w-full h-screen absolute backdrop-blur-[4px] bg-black-6/35"></div>
       <Link href="/" className="absolute left-[6%] top-[21px] z-40">
-        <img src="/Logo.svg" alt="logo" className="h-[46px]" />
+        <Image src="/Logo.svg" alt="logo" height={46} width={153}/>
       </Link>
       <div className="bg-black-8/75 backdrop-blur-xl border border-black-15 p-8 rounded-lg shadow-md w-full max-w-md mx-12 lg:mx-0">
         <h1 className="text-2xl text-[27px] font-semibold text-center mb-6 text-gray-60">
@@ -84,9 +79,17 @@ export default function RegisterPage() {
         <form onSubmit={handleRegister} className="space-y-4">
           <input
             type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="w-full p-3 rounded-lg border bg-black-6 border-black-15 text-white outline-none placeholder:text-sm"
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
             onChange={handleChange}
             className="w-full p-3 rounded-lg border bg-black-6 border-black-15 text-white outline-none placeholder:text-sm"
           />
@@ -110,6 +113,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             className="w-full p-3 border border-black-15 text-red-45 font-semibold rounded-lg bg-black-6 transition-all duration-200"
+            disabled={isLoading}
           >
             {isLoading ? "Registering..." : "Register"}
           </button>
@@ -123,4 +127,4 @@ export default function RegisterPage() {
       </div>
     </div>
   );
-} 
+}

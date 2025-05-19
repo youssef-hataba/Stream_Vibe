@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import {useState} from "react";
 import Link from "next/link";
 import MovieWall from "@/app/_components/MovieWall";
 import {useRouter} from "next/navigation";
-import supabase from "@/app/lib/supabaseClient";
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -15,11 +15,14 @@ export default function LoginPage() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    const {email,password} = formData;
 
     // Validate email and password
     if (!emailRegex.test(formData.email)) {
@@ -33,22 +36,28 @@ export default function LoginPage() {
     // }
 
     setError(""); // Clear error if validation passes
-
+    setIsLoading(true);
     try {
-      // Attempt login with Supabase
-      const {data, error} = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({email,password }),
+        credentials: "include",
       });
 
-      if (error) {
-        setError(error.message);
-      } else {
-        router.push("/");
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed.");
       }
 
+      router.push("/"); // Redirect after success
     } catch (error) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,10 +68,10 @@ export default function LoginPage() {
 
   return (
     <div className="w-screen min-h-screen z-10 absolute left-0 top-0 flex items-center justify-center bg-cover bg-center bg-black-6">
-      <MovieWall />
+      {/* <MovieWall /> */}
       <div className="w-full h-screen absolute backdrop-blur-[4px] bg-black-6/35"></div>
       <Link href="/" className="absolute left-[6%] top-[21px] z-40">
-        <img src="/Logo.svg" alt="logo" className="h-[46px]" />
+        <Image src="/Logo.svg" alt="logo" height={46} width={153}/>
       </Link>
       <div
         className="bg-black-8/75 backdrop-blur-xl border border-black-15 p-8 rounded-lg 
@@ -89,10 +98,10 @@ export default function LoginPage() {
           {/* Display error message if exists */}
           <button
             type="submit"
-            className="w-full p-3 border border-black-15 text-red-45 font-semibold rounded-lg
-            bg-black-6 text-base hover:bg-red-50 hover:bg-opacity-70 hover:font-bold hover:text-black-6
-            transition-all duration-200">
-            Login
+            className="w-full p-3 border border-black-15 text-red-45 font-semibold rounded-lg bg-black-6 transition-all duration-200"
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging..." : "Login"}
           </button>
         </form>
         <p className="text-center mt-6 text-gray-60">
