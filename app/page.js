@@ -2,6 +2,7 @@ import MovieSlider from "./_components/MovieSlider";
 import CategoriesSection from "./_components/CategoriesSection";
 import MovieSection from "./_components/MovieSection";
 
+// hello world
 const Home = () => {
   return (
     <div className="bg-black-8">
