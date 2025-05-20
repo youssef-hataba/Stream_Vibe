@@ -16,9 +16,10 @@ export default function MovieCard({
   handleRemoveFromFavorites,
 }) {
 
+
   return (
     <div className={`bg-black-10 w-[170px] overflow-hidden shrink-0`}>
-      <Link href={`/movie/${movie.id}`}>
+      <Link href={`/movie/${movie.movieId}`}>
         <div className="overflow-hidden relative">
           {isInWatchlist ? (
             <BsBookmarkFill
@@ -26,7 +27,7 @@ export default function MovieCard({
               size={32}
               onClick={(e) => {
                 e.preventDefault(); // Prevent navigation
-                handleRemoveFromWatchlist(movie.id); // Call remove function here
+                handleRemoveFromWatchlist(movie.movieId); // Call remove function here
               }}
             />
           ) : (
@@ -35,7 +36,7 @@ export default function MovieCard({
               size={32}
               onClick={(e) => {
                 e.preventDefault(); // Prevent navigation
-                handleAddToWatchlist(movie.id);
+                handleAddToWatchlist(movie); // Call add function here
               }}
             />
           )}
@@ -45,7 +46,7 @@ export default function MovieCard({
               size={22}
               onClick={(e) => {
                 e.preventDefault();
-                handleRemoveFromFavorites(movie.id);
+                handleRemoveFromFavorites(movie.movieId);
               }}
             />
           ) : (
@@ -54,19 +55,19 @@ export default function MovieCard({
               size={22}
               onClick={(e) => {
                 e.preventDefault();
-                handleAddToFavorites(movie.id);
+                handleAddToFavorites(movie);
               }}
             />
           )}
           <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w500/${movie.thumbnail}`}
             alt={movie.title}
             className="w-full object-cover"
           />
         </div>
 
         <div className="my-2 flex flex-col gap-2 px-1.5 relative justify-between text-sm text-gray-60 font-semibold">
-        <div className="overflow-hidden">
+        <div className="overflow-hiden">
           <h2 className="cursor-text text-base font-semibold whitespace-nowrap">{movie.title}</h2>
         </div>
         

@@ -1,77 +1,96 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa6";
-import supabase from "@/app/lib/supabaseClient";
-import { updateUserFavorites, updateUserWatchlist } from "@/app/lib/services/profileService";
+import { useUser } from "../../context/UserContext";
 
-const HeroSectionButtons = ({ classes, movieId }) => {
-  const [userLists, setUserLists] = useState({ watchlist: [], favorites: [] });
+import {
+  addToFavorites,
+  removeFromFavorites,
+  addToWatchLater,
+  removeFromWatchLater,
+} from "@/app/lib/services/profileService";
 
+const HeroSectionButtons = ({ classes, movieId, title, thumbnail }) => {
+  const { user, loading } = useUser();
+
+  const [userLists, setUserLists] = useState({ watchLater: [], favorites: [] });
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          const { data: profileData, error } = await supabase
-            .from("users")
-            .select("watchlist, favorites")
-            .eq("email", user.email)
-            .single();
+    if (user) {
+      setUserLists({
+        watchLater: user.watchLater?.map(item => item.movieId) || [],
+        favorites: user.favorites?.map(item => item.movieId) || [],
+      });
+    } else {
+      setUserLists({ watchLater: [], favorites: [] });
+    }
+  }, [user]);
 
-          if (error) throw error;
-          setUserLists({
-            watchlist: profileData.watchlist || [],
-            favorites: profileData.favorites || []
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
+  const toggleWatchLater = async () => {
+    if (!user) return alert("Please log in to manage your watch later list");
+    if (updating) return;
 
-    fetchUserProfile();
-  }, [movieId]);
+    const isInWatchLater = userLists.watchLater.includes(movieId);
 
-  const toggleWatchlist = async () => {
-    const newWatchlist = userLists.watchlist.includes(movieId)
-      ? userLists.watchlist.filter(id => id !== movieId)
-      : [...userLists.watchlist, movieId];
-
-    setUserLists(prev => ({ ...prev, watchlist: newWatchlist }));
-
+    setUpdating(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await updateUserWatchlist(user.email, newWatchlist);
+      if (isInWatchLater) {
+        await removeFromWatchLater(movieId);
+        setUserLists(prev => ({
+          ...prev,
+          watchLater: prev.watchLater.filter(id => id !== movieId),
+        }));
+      } else {
+        await addToWatchLater({ movieId, title, thumbnail });
+        setUserLists(prev => ({
+          ...prev,
+          watchLater: [...prev.watchLater, movieId],
+        }));
       }
     } catch (error) {
-      console.error("Error updating watchlist:", error);
+      alert("Failed to update watch later list");
+    } finally {
+      setUpdating(false);
     }
   };
 
   const toggleFavorites = async () => {
-    const newFavorites = userLists.favorites.includes(movieId)
-      ? userLists.favorites.filter(id => id !== movieId)
-      : [...userLists.favorites, movieId];
+    if (!user) return alert("Please log in to manage your favorites");
+    if (updating) return;
 
-    setUserLists(prev => ({ ...prev, favorites: newFavorites }));
+    const isFavorite = userLists.favorites.includes(movieId);
 
+    setUpdating(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await updateUserFavorites(user.email, newFavorites);
+      if (isFavorite) {
+        await removeFromFavorites(movieId);
+        setUserLists(prev => ({
+          ...prev,
+          favorites: prev.favorites.filter(id => id !== movieId),
+        }));
+      } else {
+        await addToFavorites({ movieId, title, thumbnail });
+        setUserLists(prev => ({
+          ...prev,
+          favorites: [...prev.favorites, movieId],
+        }));
       }
     } catch (error) {
-      console.error("Error updating favorites:", error);
+      alert("Failed to update favorites");
+    } finally {
+      setUpdating(false);
     }
   };
 
   const handleClick = () => {
     window.location.href = `/trailer/${movieId}`;
   };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="flex gap-4 flex-col lg:flex-row">
@@ -88,10 +107,12 @@ const HeroSectionButtons = ({ classes, movieId }) => {
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
           onClick={(e) => {
             e.preventDefault();
-            toggleWatchlist();
+            toggleWatchLater();
           }}
+          disabled={updating}
+          title={userLists.watchLater.includes(movieId) ? "Remove from watch later" : "Add to watch later"}
         >
-          {userLists.watchlist.includes(movieId) ? (
+          {userLists.watchLater.includes(movieId) ? (
             <BsBookmarkFill className="text-yellow-600 duration-200 transition-all transform group-hover:scale-125" size={18} />
           ) : (
             <BsBookmark className="duration-200 transition-all transform group-hover:scale-125" size={18} />
@@ -104,6 +125,8 @@ const HeroSectionButtons = ({ classes, movieId }) => {
             e.preventDefault();
             toggleFavorites();
           }}
+          disabled={updating}
+          title={userLists.favorites.includes(movieId) ? "Remove from favorites" : "Add to favorites"}
         >
           <FaHeart
             className={`duration-200 transition-all transform group-hover:scale-125 ${

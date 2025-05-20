@@ -9,6 +9,10 @@ const MovieHeroBanner = ({ movie, classes }) => {
   const router = useRouter(); 
   const [isMobile, setIsMobile] = useState(null);
 
+  const thumbnail = isMobile
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
+
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
   }, []);
@@ -27,11 +31,7 @@ const MovieHeroBanner = ({ movie, classes }) => {
     <div id="herosection" className="mb-20 relative">
       <div className="image-wrapper rounded-[1rem]" onClick={handleMovieClick}>
         <Image
-          src={
-            isMobile
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
-          }
+          src={thumbnail}
           alt={movie.title || "Movie poster"}
           layout="responsive"
           width={isMobile ? 500 : 1280}
@@ -45,7 +45,7 @@ const MovieHeroBanner = ({ movie, classes }) => {
         <h2>{movie.title}</h2>
         <p className="hidden lg:block">{movie.overview}</p>
         <div className="flex justify-center">
-          <HeroSectionButtons classes={classes} movieId={movie.id} />
+          <HeroSectionButtons classes={classes} movieId={movie.id} title={movie.title} thumbnail={thumbnail} />
         </div>
       </div>
 

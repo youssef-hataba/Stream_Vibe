@@ -1,42 +1,87 @@
-import supabase from "@/app/lib/supabaseClient";
 
-export const getUserProfile = async (email) => {
-  const { data, error } = await supabase.from("users").select("*").eq("email", email).single();
-  if (error) throw error;
-  return data;
+// Add to favorites
+export const addToFavorites = async (movie) => {
+  const res = await fetch("http://localhost:5000/api/user/favorites", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(movie), // movie = { movieId, title, thumbnail }
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to add to favorites");
+  }
+
+  return res.json();
+};
+
+// Remove from favorites
+export const removeFromFavorites = async (movieId) => {
+  const res = await fetch(`http://localhost:5000/api/user/favorites/${movieId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to remove from favorites");
+  }
+
+  return res.json();
+};
+
+// Add to watch later
+export const addToWatchLater = async (movie) => {
+  const res = await fetch("http://localhost:5000/api/user/watchlater", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(movie),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to add to watch later");
+  }
+
+  return res.json();
+};
+
+// Remove from watch later
+export const removeFromWatchLater = async (movieId) => {
+  const res = await fetch(`http://localhost:5000/api/user/watchlater/${movieId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to remove from watch later");
+  }
+
+  return res.json();
 };
 
 
-export const updateUserWatchlist = async (email, watchlist) => {
-  const { error } = await supabase.from("users").update({ watchlist }).eq("email", email);
-  if (error) throw error;
-};
+// export const updateUserRatings = async (email, movieId, userRating) => {
 
+//   const { data, error: fetchError } = await supabase
+//     .from("users")
+//     .select("ratings")
+//     .eq("email", email)
+//     .single();
 
-export const updateUserFavorites = async (email, favorites) => {
-  const { error } = await supabase.from("users").update({ favorites }).eq("email", email);
-  if (error) throw error;
-};
+//   if (fetchError) throw fetchError;
 
+//   const currentRatings = data.ratings || {};
 
-export const updateUserRatings = async (email, movieId, userRating) => {
+//   const updatedRatings = { ...currentRatings, [movieId]: userRating };
 
-  const { data, error: fetchError } = await supabase
-    .from("users")
-    .select("ratings")
-    .eq("email", email)
-    .single();
+//   const { error: updateError } = await supabase
+//     .from("users")
+//     .update({ ratings: updatedRatings })
+//     .eq("email", email);
 
-  if (fetchError) throw fetchError;
-
-  const currentRatings = data.ratings || {};
-
-  const updatedRatings = { ...currentRatings, [movieId]: userRating };
-
-  const { error: updateError } = await supabase
-    .from("users")
-    .update({ ratings: updatedRatings })
-    .eq("email", email);
-
-  if (updateError) throw updateError;
-};
+//   if (updateError) throw updateError;
+// };

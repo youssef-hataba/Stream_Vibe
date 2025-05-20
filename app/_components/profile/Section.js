@@ -10,7 +10,8 @@ const Section = ({
   handleRemoveFromWatchlist,
   handleAddToFavorites,
   handleRemoveFromFavorites
-}) => (
+}) => {  
+  return (
   <div className={`${title.toLowerCase().replace(" ", "-")} mt-12`}>
     <h3 className="text-3xl font-semibold mb-7">{title}</h3>
     <div className="flex gap-5 overflow-x-auto scroll-smooth pb-4">
@@ -19,8 +20,8 @@ const Section = ({
           <MovieCard
             movie={movie}
             key={index}
-            isInWatchlist={watchlistMovies.some((m) => m.id === movie.id)}
-            isFavorite={favoriteMovies.some((m) => m.id === movie.id)}
+            isInWatchlist={watchlistMovies.some((m) => m.movieId === movie.movieId)}
+            isFavorite={favoriteMovies.some((m) => m.movieId === movie.movieId)}
             userRating={ratings[movie.id]}
             handleAddToWatchlist={handleAddToWatchlist}
             handleRemoveFromWatchlist={handleRemoveFromWatchlist}
@@ -33,6 +34,7 @@ const Section = ({
       )}
     </div>
   </div>
-);
+  );
+};
 
 export default Section;
