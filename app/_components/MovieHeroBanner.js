@@ -1,17 +1,17 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; 
+import {useState, useEffect} from "react";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
-import { FaPlay } from "react-icons/fa";
+import {FaPlay} from "react-icons/fa";
 import HeroSectionButtons from "./buttons/HeroSectionButtons";
 
-const MovieHeroBanner = ({ movie, classes }) => {
-  const router = useRouter(); 
+const MovieHeroBanner = ({movie, classes}) => {
+  const router = useRouter();
   const [isMobile, setIsMobile] = useState(null);
 
   const thumbnail = isMobile
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+    : `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`;
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
@@ -45,14 +45,17 @@ const MovieHeroBanner = ({ movie, classes }) => {
         <h2>{movie.title}</h2>
         <p className="hidden lg:block">{movie.overview}</p>
         <div className="flex justify-center">
-          <HeroSectionButtons classes={classes} movieId={movie.id} title={movie.title} thumbnail={thumbnail} />
+          <HeroSectionButtons
+            classes={classes}
+            movieId={movie.id}
+            title={movie.title}
+            thumbnail={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          />
         </div>
       </div>
 
       <div className="flex gap-4 flex-col lg:flex-row">
-        <button
-          onClick={handleTrailerClick} >
-        </button>
+        <button onClick={handleTrailerClick}></button>
       </div>
     </div>
   );

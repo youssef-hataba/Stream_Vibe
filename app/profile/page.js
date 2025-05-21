@@ -1,134 +1,68 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useUser } from "../context/UserContext";
-import { Spinner1 } from "../_components/Spinner";
+import {useEffect} from "react";
+import {useRouter} from "next/navigation";
+import {useUser} from "../context/UserContext";
+import {Spinner1} from "../_components/Spinner";
 import Section from "../_components/profile/Section";
 import ProfileHeader from "../_components/profile/ProfileHeader";
-import {
-  addToFavorites,
-  removeFromFavorites,
-  addToWatchLater,
-  removeFromWatchLater,
-} from "../lib/services/profileService";
+import {useMovieActions} from "../hooks/useMoviesAction";
 
 function ProfilePage() {
   const router = useRouter();
-  const { user, setUser, loading } = useUser();
+  const {user, setUser, loading} = useUser();
+  const {updating, isInWatchLater, isFavorite, toggleWatchLater, toggleFavorites} =
+    useMovieActions();
 
-  const [watchlistMovies, setWatchlistMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-
-  const handleError = (error) => {
-    console.error("Error:", error);
-  };
-
+  // Redirect if user logs out or not logged in
   useEffect(() => {
-    if (!user) return;
-
-    if (user.watchLater?.length > 0) {
-      setWatchlistMovies(user.watchLater);
+    if (!loading && !user) {
+      router.push("/");
     }
-
-    if (user.favorites?.length > 0) {
-      setFavoriteMovies(user.favorites);
-    }
-
-  }, [user]);
-
-  const handleAddToWatchlist = async (movie) => {
-    try {
-      await addToWatchLater(movie);
-      const updatedList = [...(watchlistMovies || []), movie];
-      setWatchlistMovies(updatedList);
-      setUser({ ...user, watchLater: updatedList });
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const handleRemoveFromWatchlist = async (movieId) => {
-    try {
-      await removeFromWatchLater(movieId);
-      const updatedList = (watchlistMovies || []).filter(
-        (movie) => movie.movieId !== movieId
-      );
-      setWatchlistMovies(updatedList);
-      setUser({ ...user, watchLater: updatedList });
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const handleAddToFavorites = async (movie) => {
-    try {
-      await addToFavorites(movie);
-      const updatedList = [...(favoriteMovies || []), movie];
-      setFavoriteMovies(updatedList);
-      setUser({ ...user, favorites: updatedList });
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const handleRemoveFromFavorites = async (movieId) => {
-    try {
-      await removeFromFavorites(movieId);
-      const updatedList = (favoriteMovies || []).filter(
-        (movie) => movie.movieId !== movieId
-      );
-      setFavoriteMovies(updatedList);
-      setUser({ ...user, favorites: updatedList });
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  }, [user, loading, router]);
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:5000/api/user/logout", {
+      await fetch("http://localhost:5000/api/auth/logout", {
         method: "POST",
         credentials: "include",
       });
       setUser(null);
       router.push("/");
     } catch (error) {
-      handleError(error);
+      console.error("Logout error:", error);
     }
   };
 
-  if (loading) return <Spinner1 />;
+  if (loading || !user) return <Spinner1 />;
+
+  const sections = [
+    {title: "Watchlist", movies: user?.watchLater || []},
+    {title: "Favorites", movies: user?.favorites || []},
+  ];
 
   return (
     <div className="text-gray-80">
-      <div>
-        <ProfileHeader
-          name={user?.firstName + " " + user?.lastName}
-          email={user?.email}
-          handleLogout={handleLogout}
-        />
+      <ProfileHeader
+        name={`${user?.firstName} ${user?.lastName}`}
+        email={user?.email}
+        handleLogout={handleLogout}
+      />
+
+      {sections.map(({title, movies}) => (
         <Section
-          title="Watchlist"
-          movies={watchlistMovies}
-          favoriteMovies={favoriteMovies}
-          watchlistMovies={watchlistMovies}
-          handleAddToWatchlist={handleAddToWatchlist}
-          handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-          handleAddToFavorites={handleAddToFavorites}
-          handleRemoveFromFavorites={handleRemoveFromFavorites}
+          key={title}
+          title={title}
+          movies={movies}
+          favoriteMovies={user?.favorites || []}
+          watchlistMovies={user?.watchLater || []}
+          isInWatchLater={isInWatchLater}
+          isFavorite={isFavorite}
+          toggleWatchLater={toggleWatchLater}
+          toggleFavorites={toggleFavorites}
+          updating={updating}
         />
-        <Section
-          title="Favorites"
-          movies={favoriteMovies}
-          favoriteMovies={favoriteMovies}
-          watchlistMovies={watchlistMovies}
-          handleAddToWatchlist={handleAddToWatchlist}
-          handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-          handleAddToFavorites={handleAddToFavorites}
-          handleRemoveFromFavorites={handleRemoveFromFavorites}
-        />
-      </div>
+      ))}
     </div>
   );
 }

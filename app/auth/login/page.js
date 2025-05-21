@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/app/context/UserContext"; 
 import Image from "next/image";
 import {useState} from "react";
 import Link from "next/link";
@@ -7,7 +8,6 @@ import MovieWall from "@/app/_components/MovieWall";
 import {useRouter} from "next/navigation";
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -16,6 +16,8 @@ export default function LoginPage() {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setUser } = useUser();
 
   const router = useRouter();
 
@@ -30,12 +32,7 @@ export default function LoginPage() {
       return;
     }
 
-    // if (!passwordRegex.test(formData.password)) {
-    //   setError("Password must be 6+ chars, with uppercase, number, special char.");
-    //   return;
-    // }
-
-    setError(""); // Clear error if validation passes
+    setError(""); 
     setIsLoading(true);
     try {
       const res = await fetch("http://localhost:5000/api/auth/login", {
@@ -52,6 +49,8 @@ export default function LoginPage() {
       if (!res.ok) {
         throw new Error(data.message || "Login failed.");
       }
+
+      setUser(data.user);
 
       router.push("/"); // Redirect after success
     } catch (error) {

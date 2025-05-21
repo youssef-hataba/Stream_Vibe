@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/app/context/UserContext"; 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import MovieWall from "@/app/_components/MovieWall";
 import Image from "next/image";
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,9 @@ export default function RegisterPage() {
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setUser } = useUser();
+  
   const router = useRouter();
 
   const handleRegister = async (e) => {
@@ -30,9 +34,9 @@ export default function RegisterPage() {
     if (!emailRegex.test(email)) {
       return setError("Invalid email format.");
     }
-    // if (!passwordRegex.test(password)) {
-    //   return setError("Password must be 6+ chars, with uppercase, lowercase, number, and special character.");
-    // }
+    if (!passwordRegex.test(password)) {
+      return setError("Password must be 6+ chars, with uppercase, lowercase, number, and special character.");
+    }
 
     setIsLoading(true);
 
@@ -51,6 +55,8 @@ export default function RegisterPage() {
       if (!res.ok) {
         throw new Error(data.message || "Registration failed.");
       }
+
+      setUser(data.user);
 
       router.push("/"); // Redirect after success
     } catch (error) {

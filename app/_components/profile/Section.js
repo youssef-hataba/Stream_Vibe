@@ -3,37 +3,33 @@ import MovieCard from "./MovieCard";
 const Section = ({
   title,
   movies,
-  favoriteMovies = [],
-  watchlistMovies = [],
-  ratings = {},
-  handleAddToWatchlist,
-  handleRemoveFromWatchlist,
-  handleAddToFavorites,
-  handleRemoveFromFavorites
-}) => {  
+  isInWatchLater,
+  isFavorite,
+  toggleWatchLater,
+  toggleFavorites,
+  updating,
+}) => {
   return (
-  <div className={`${title.toLowerCase().replace(" ", "-")} mt-12`}>
-    <h3 className="text-3xl font-semibold mb-7">{title}</h3>
-    <div className="flex gap-5 overflow-x-auto scroll-smooth pb-4">
-      {movies.length > 0 ? (
-        movies.map((movie, index) => (
-          <MovieCard
-            movie={movie}
-            key={index}
-            isInWatchlist={watchlistMovies.some((m) => m.movieId === movie.movieId)}
-            isFavorite={favoriteMovies.some((m) => m.movieId === movie.movieId)}
-            userRating={ratings[movie.id]}
-            handleAddToWatchlist={handleAddToWatchlist}
-            handleRemoveFromWatchlist={handleRemoveFromWatchlist}
-            handleAddToFavorites={handleAddToFavorites}
-            handleRemoveFromFavorites={handleRemoveFromFavorites}
-          />
-        ))
-      ) : (
-        <p>Your {title.toLowerCase()} is empty.</p>
-      )}
+    <div className={`${title.toLowerCase().replace(" ", "-")} mt-12`}>
+      <h3 className="text-3xl font-semibold mb-7">{title}</h3>
+      <div className="flex gap-5 overflow-x-auto scroll-smooth pb-4">
+        {movies.length > 0 ? (
+          movies.map((movie, index) => (
+            <MovieCard
+              movie={movie}
+              key={index}
+              isInWatchlist={isInWatchLater(movie.movieId)}
+              isFavorite={isFavorite(movie.movieId)}
+              toggleWatchLater={toggleWatchLater}
+              toggleFavorites={toggleFavorites}
+              updating={updating}
+            />
+          ))
+        ) : (
+          <p>Your {title.toLowerCase()} is empty.</p>
+        )}
+      </div>
     </div>
-  </div>
   );
 };
 
