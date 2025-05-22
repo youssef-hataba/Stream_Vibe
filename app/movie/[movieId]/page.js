@@ -10,7 +10,8 @@ import {Spinner1} from "@/app/_components/Spinner";
 import MovieCard from "@/app/_components/MovieCard";
 import StarRating from "@/app/_components/StarRating";
 import Link from "next/link";
-import Rating from "@/app/_components/Rating";
+import Review from "@/app/_components/AddReview";
+import MovieReviews from "@/app/_components/MovieReviews";
 
 export default async function MovieDetailsPage({params}) {
   const {movieId} = await params;
@@ -30,7 +31,7 @@ export default async function MovieDetailsPage({params}) {
       {/* Main Content Section */}
       <div className="flex flex-col md:flex-row gap-5 mt-16">
         {/* Left Column */}
-        <div className="md:w-[70%] flex-1">
+        <div className="md:w-[60%] flex-1">
           {/* Description Section */}
           <div className="bg-black-10 mb-5 p-8 rounded-lg border border-black-15">
             <h2 className="text-xl font-semibold text-gray-99">Description</h2>
@@ -43,7 +44,7 @@ export default async function MovieDetailsPage({params}) {
               <h2 className="text-xl font-semibold">Cast</h2>
               <div className="flex gap-3 overflow-x-auto scroll-smooth pt-7">
                 {cast
-                  .filter((actor) => actor.profile_path) 
+                  .filter((actor) => actor.profile_path)
                   .map((actor) => (
                     <Link key={actor.cast_id} href={`/actors/${actor.id}`}>
                       <div className="max-w-[100px] min-w-[80px] overflow-hidden cursor-pointer">
@@ -59,12 +60,16 @@ export default async function MovieDetailsPage({params}) {
               </div>
             </div>
           )}
-          {/* Add Rating */}
-          <Rating movieId={movieId}/>
+          {/* Reviews Section */}
+          <div className="bg-black-10 p-8 rounded-lg mb-6 border border-black-15 ">
+            <h2 className="text-xl font-semibold">Reviews</h2>
+            <MovieReviews movieId={movieId} />
+          </div>
+          {/* Add Review */}
         </div>
 
         {/* Right Column */}
-        <div className="space-y- bg-black-10 p-8 rounded-lg border border-black-15">
+        <div className="bg-black-10 p-8 rounded-lg border border-black-15">
           {/* Info Cards */}
           <div className="p-4">
             <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-60 mb-4">

@@ -1,7 +1,8 @@
+// Alert.jsx
 "use client";
 import { useState, useEffect } from "react";
 
-const Alert = ({ message, type = 'info', duration = 5000 }) => {
+const Alert = ({ message, type = 'info', duration = 5000, onClose }) => {
   const alertStyles = {
     info: { backgroundColor: '#a8dadc', color: '#1d3557' },
     success: { backgroundColor: '#90e0ef', color: '#023e8a' },
@@ -14,10 +15,11 @@ const Alert = ({ message, type = 'info', duration = 5000 }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAlert(false);
+      if (onClose) onClose();   // notify parent component
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration]);
+  }, [duration, onClose]);
 
   if (!showAlert) return null;
 
@@ -40,7 +42,10 @@ const Alert = ({ message, type = 'info', duration = 5000 }) => {
     >
       <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{message}</span>
       <button
-        onClick={() => setShowAlert(false)}
+        onClick={() => {
+          setShowAlert(false);
+          if (onClose) onClose();
+        }}
         style={{
           background: 'none',
           border: 'none',

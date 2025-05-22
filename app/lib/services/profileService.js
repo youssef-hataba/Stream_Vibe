@@ -63,25 +63,3 @@ export const removeFromWatchLater = async (movieId) => {
   return res.json();
 };
 
-
-// export const updateUserRatings = async (email, movieId, userRating) => {
-
-//   const { data, error: fetchError } = await supabase
-//     .from("users")
-//     .select("ratings")
-//     .eq("email", email)
-//     .single();
-
-//   if (fetchError) throw fetchError;
-
-//   const currentRatings = data.ratings || {};
-
-//   const updatedRatings = { ...currentRatings, [movieId]: userRating };
-
-//   const { error: updateError } = await supabase
-//     .from("users")
-//     .update({ ratings: updatedRatings })
-//     .eq("email", email);
-
-//   if (updateError) throw updateError;
-// };
