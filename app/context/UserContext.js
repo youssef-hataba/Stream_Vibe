@@ -4,11 +4,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const UserContext = createContext(null);
 
-export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export const UserProvider = ({ children , userFromServer }) => {
+  const [user, setUser] = useState(userFromServer || null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (userFromServer) return;
+
     const fetchUser = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/user/profile", {
@@ -33,7 +35,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchUser();
-  }, []);
+  }, [userFromServer,user]);
 
   return (
     <UserContext.Provider value={{ user, setUser, loading }}>

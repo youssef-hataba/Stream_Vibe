@@ -15,7 +15,7 @@ const HeroSectionButtons = ({classes, movieId, title, thumbnail}) => {
     window.location.href = `/trailer/${movieId}`;
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading && !user) return <p>Loading...</p>;
 
   const watchLaterStatus = isInWatchLater(movieId);
   const favoriteStatus = isFavorite(movieId);

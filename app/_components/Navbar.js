@@ -11,7 +11,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
   const classes = isOpen ? "" : "hidden lg:block";
 
@@ -37,7 +37,7 @@ const Navbar = () => {
         <FaSearch className="text-red-45 lg:hidden" size={25} onClick={handleOpen} />
 
         {/* Conditional Rendering based on user session */}
-        {!isOpen && !loading &&(
+        {!isOpen &&(
           <>
             {user ? (
               <Link href="/profile" aria-label="User profile" className="p-1 rounded-full bg-black-15">
