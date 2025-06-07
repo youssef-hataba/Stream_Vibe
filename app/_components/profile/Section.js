@@ -35,7 +35,7 @@ const Section = ({
             );
           })
         ) : (
-          <p>Your {title.toLowerCase()} is empty.</p>
+          <p>Your {title.toLowerCase()} is empty 😕.</p>
         )}
       </div>
     </div>

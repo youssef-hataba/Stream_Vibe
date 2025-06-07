@@ -34,14 +34,12 @@ function ProfilePage() {
     }
   };
 
-  if (loading && !user) return <Spinner1 />;
+  if (loading || !user) return <Spinner1/>;
 
   const sections = [
     {title: "Watchlist", movies: user?.watchLater || []},
     {title: "Favorites", movies: user?.favorites || []},
   ];
-
-  console.log("User data:", reviews);
 
   return (
     <div className="text-gray-80">
