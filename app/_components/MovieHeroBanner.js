@@ -50,6 +50,7 @@ const MovieHeroBanner = ({movie, classes}) => {
             movieId={movie.id}
             title={movie.title}
             thumbnail={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            IMDB_Rating={movie.vote_average / 2}
           />
         </div>
       </div>

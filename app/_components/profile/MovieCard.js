@@ -72,7 +72,7 @@ export default function MovieCard({
           <div className="flex items-center justify-between gap-5">
             <span className="flex items-center gap-1" title="IMDb Rating">
               <FaStar className="text-red-45" />
-              <span>{(movie.vote_average / 2).toFixed(1)}</span>
+              <span>{(movie.IMDB_Rating).toFixed(1)}</span>
             </span>
             {userRating !== null && userRating !== undefined && (
               <span className="flex items-center gap-1">

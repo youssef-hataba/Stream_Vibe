@@ -7,7 +7,7 @@ export const addToFavorites = async (movie) => {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify(movie), // movie = { movieId, title, thumbnail }
+    body: JSON.stringify(movie), // movie = { movieId, title, thumbnail,IMDB_Rating }
   });
 
   if (!res.ok) {

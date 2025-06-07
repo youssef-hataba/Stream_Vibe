@@ -6,7 +6,7 @@ import {FaPlay} from "react-icons/fa6";
 import {useUser} from "../../context/UserContext";
 import {useMovieActions} from "@/app/hooks/useMoviesAction";
 
-const HeroSectionButtons = ({classes, movieId, title, thumbnail}) => {
+const HeroSectionButtons = ({classes, movieId, title, thumbnail ,IMDB_Rating }) => {
   const {user, loading} = useUser();
   const {updating, isInWatchLater, isFavorite, toggleWatchLater, toggleFavorites} =
     useMovieActions();
@@ -35,7 +35,7 @@ const HeroSectionButtons = ({classes, movieId, title, thumbnail}) => {
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
           onClick={(e) => {
             e.preventDefault();
-            toggleWatchLater({movieId, title, thumbnail});
+            toggleWatchLater({movieId, title, thumbnail,IMDB_Rating });
           }}
           disabled={updating}
           title={watchLaterStatus ? "Remove from watch later" : "Add to watch later"}>
@@ -56,7 +56,7 @@ const HeroSectionButtons = ({classes, movieId, title, thumbnail}) => {
           className="w-[3rem] h-[3rem] bg-black-6 rounded-lg flex items-center justify-center group"
           onClick={(e) => {
             e.preventDefault();
-            toggleFavorites({movieId, title, thumbnail});
+            toggleFavorites({movieId, title, thumbnail,IMDB_Rating });
           }}
           disabled={updating}
           title={favoriteStatus ? "Remove from favorites" : "Add to favorites"}>

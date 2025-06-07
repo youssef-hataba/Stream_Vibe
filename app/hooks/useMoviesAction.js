@@ -17,7 +17,8 @@ export function useMovieActions() {
 
   const isFavorite = (movieId) => user?.favorites?.some((movie) => movie.movieId === movieId);
 
-  const toggleWatchLater = async ({movieId, title, thumbnail}) => {
+  const toggleWatchLater = async ({movieId, title, thumbnail,IMDB_Rating }) => {
+    console.log("toggleWatchLater called with movieId:", IMDB_Rating);
     if (!user) {
       alert("Please login to add movies to Watch Later.");
       router.push("/auth/login");
@@ -33,8 +34,8 @@ export function useMovieActions() {
         await removeFromWatchLater(movieId);
         updatedList = user.watchLater.filter((m) => m.movieId !== movieId);
       } else {
-        await addToWatchLater({movieId, title, thumbnail});
-        updatedList = [...(user.watchLater || []), {movieId, title, thumbnail}];
+        await addToWatchLater({movieId, title, thumbnail,IMDB_Rating });
+        updatedList = [...(user.watchLater || []), {movieId, title, thumbnail,IMDB_Rating }];
       }
 
       setUser({...user, watchLater: updatedList});
@@ -45,7 +46,7 @@ export function useMovieActions() {
     }
   };
 
-  const toggleFavorites = async ({movieId, title, thumbnail}) => {
+  const toggleFavorites = async ({movieId, title, thumbnail,IMDB_Rating}) => {
     if (!user) {
       alert("Please login to add movies to Favorites.");
       router.push("/auth/login");
@@ -61,8 +62,8 @@ export function useMovieActions() {
         await removeFromFavorites(movieId);
         updatedList = user.favorites.filter((m) => m.movieId !== movieId);
       } else {
-        await addToFavorites({movieId, title, thumbnail});
-        updatedList = [...(user.favorites || []), {movieId, title, thumbnail}];
+        await addToFavorites({movieId, title, thumbnail ,IMDB_Rating });
+        updatedList = [...(user.favorites || []), {movieId, title, thumbnail,IMDB_Rating }];
       }
 
       setUser({...user, favorites: updatedList});
