@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard";
 const Section = ({
   title,
   movies,
+  reviews,
   isInWatchLater,
   isFavorite,
   toggleWatchLater,
@@ -14,17 +15,25 @@ const Section = ({
       <h3 className="text-3xl font-semibold mb-7">{title}</h3>
       <div className="flex gap-5 overflow-x-auto scroll-smooth pb-4">
         {movies.length > 0 ? (
-          movies.map((movie, index) => (
-            <MovieCard
-              movie={movie}
-              key={index}
-              isInWatchlist={isInWatchLater(movie.movieId)}
-              isFavorite={isFavorite(movie.movieId)}
-              toggleWatchLater={toggleWatchLater}
-              toggleFavorites={toggleFavorites}
-              updating={updating}
-            />
-          ))
+          movies.map((movie, index) => {
+            // Find review for this movie
+            const userReview = reviews.find(
+              (review) => review.movieId === movie.movieId
+            );
+
+            return (
+              <MovieCard
+                key={index}
+                movie={movie}
+                isInWatchlist={isInWatchLater(movie.movieId)}
+                isFavorite={isFavorite(movie.movieId)}
+                toggleWatchLater={toggleWatchLater}
+                toggleFavorites={toggleFavorites}
+                updating={updating}
+                userRating={userReview ? userReview.rating : null}
+              />
+            );
+          })
         ) : (
           <p>Your {title.toLowerCase()} is empty.</p>
         )}

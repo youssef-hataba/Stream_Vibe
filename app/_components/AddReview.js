@@ -8,11 +8,15 @@ import {AiOutlineUser} from "react-icons/ai";
 import Image from "next/image";
 
 const Review = ({movieId, onReviewSubmitted}) => {
-  const {user, loading} = useUser();
+  const {user, loading,reviews, setReviews} = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [alert, setAlert] = useState({show: false, message: "", type: "info"});
+
+  const existingReview = reviews.find(
+    (r) => r.movieId == movieId
+  );
 
   const handleToggle = () => {
     if (!user && !loading) {
@@ -23,6 +27,17 @@ const Review = ({movieId, onReviewSubmitted}) => {
       });
       return;
     }
+
+    if (!isOpen) {
+      if (existingReview) {
+        setRating(existingReview.rating);
+        setReview(existingReview.review);
+      } else {
+        setRating(0);
+        setReview("");
+      }
+    }
+
     setIsOpen(!isOpen);
   };
 
@@ -53,9 +68,17 @@ const Review = ({movieId, onReviewSubmitted}) => {
 
       if (!res.ok) throw new Error(data.message || "Failed to submit");
 
+      const updatedReview = data.review;
+      setReviews((prev) => {
+        const filtered = prev.filter((r) => r.movieId != movieId);
+        return [...filtered, updatedReview];
+      });
+
       setAlert({
         show: true,
-        message: "Your review has been submitted!",
+        message: existingReview
+          ? "Your review has been updated!"
+          : "Your review has been submitted!",
         type: "success",
       });
 
@@ -88,8 +111,10 @@ const Review = ({movieId, onReviewSubmitted}) => {
         <button
           onClick={handleToggle}
           className="text-xl font-semibold border border-black-15 rounded-lg py-2 px-4
-          text-gray-75 w-full text-center bg-black-15 transition-all">
-          <span className="text-xl">+</span> Add Your Review
+          text-gray-75 w-full text-center bg-black-15 transition-all"
+        >
+          <span className="text-xl">+</span>{" "}
+          {existingReview ? "Update Your Review" : "Add Your Review"}
         </button>
 
         {isOpen && (

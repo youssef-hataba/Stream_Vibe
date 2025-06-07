@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import {FaStar} from "react-icons/fa";
+import {BsBookmark, BsBookmarkFill} from "react-icons/bs";
+import {FaRegHeart, FaHeart} from "react-icons/fa";
 import Image from "next/image";
 
 export default function MovieCard({
@@ -11,6 +11,7 @@ export default function MovieCard({
   toggleWatchLater,
   toggleFavorites,
   updating,
+  userRating,
 }) {
   return (
     <div className="bg-black-10 w-[200px] overflow-hidden shrink-0 relative rounded-sm">
@@ -65,24 +66,20 @@ export default function MovieCard({
 
         <div className="my-2 flex flex-col gap-2 px-1.5 relative justify-between text-sm text-gray-60 font-semibold">
           <div className="overflow-hidden">
-            <h2 className="cursor-text text-base font-semibold whitespace-nowrap">
-              {movie.title}
-            </h2>
+            <h2 className="cursor-text text-base font-semibold whitespace-nowrap">{movie.title}</h2>
           </div>
 
           <div className="flex items-center justify-between gap-5">
-            <span className="flex text-red-45 gap-1 items-center">
-              <FaStar />
-              <span className="text-gray-60">
-                {(movie.vote_average / 2).toFixed(1)}
-              </span>
+            <span className="flex items-center gap-1" title="IMDb Rating">
+              <FaStar className="text-red-45" />
+              <span>{(movie.vote_average / 2).toFixed(1)}</span>
             </span>
-            {/* {userRating && (
+            {userRating !== null && userRating !== undefined && (
               <span className="flex items-center gap-1">
                 <FaStar className="text-yellow-600" />
                 <span>{userRating}</span>
               </span>
-            )} */}
+            )}
           </div>
         </div>
       </Link>

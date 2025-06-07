@@ -41,6 +41,8 @@ function ProfilePage() {
     {title: "Favorites", movies: user?.favorites || []},
   ];
 
+  console.log("User data:", reviews);
+
   return (
     <div className="text-gray-80">
       <ProfileHeader

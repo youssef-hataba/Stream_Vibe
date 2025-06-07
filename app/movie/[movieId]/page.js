@@ -65,7 +65,6 @@ export default async function MovieDetailsPage({params}) {
             <h2 className="text-xl font-semibold">Reviews</h2>
             <MovieReviews movieId={movieId} />
           </div>
-          {/* Add Review */}
         </div>
 
         {/* Right Column */}

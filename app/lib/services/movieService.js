@@ -36,10 +36,7 @@ export const getMovieReviews = async (movieId) => {
         source: "tmdb",
       })),
       ];
-
       
-
-      console.log("all data :",allReviews);
     return allReviews;
   } catch (error) {
     console.error("Error fetching reviews:", error.message);
