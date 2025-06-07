@@ -10,7 +10,7 @@ import {useMovieActions} from "../hooks/useMoviesAction";
 
 function ProfilePage() {
   const router = useRouter();
-  const {user, setUser, loading} = useUser();
+  const { user, setUser, reviews, loading } = useUser();
   const {updating, isInWatchLater, isFavorite, toggleWatchLater, toggleFavorites} =
     useMovieActions();
 
@@ -54,6 +54,7 @@ function ProfilePage() {
           key={title}
           title={title}
           movies={movies}
+          reviews={reviews || []}
           favoriteMovies={user?.favorites || []}
           watchlistMovies={user?.watchLater || []}
           isInWatchLater={isInWatchLater}

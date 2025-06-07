@@ -18,7 +18,7 @@ export async function getUserFromCookie() {
     if (!res.ok) return null;
 
     const data = await res.json();
-    return data.status === "success" ? data.user : null;
+    return data.status === "success" ? data : null;
   } catch {
     return null;
   }

@@ -4,12 +4,18 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const UserContext = createContext(null);
 
-export const UserProvider = ({ children , userFromServer }) => {
+export const UserProvider = ({ children, userFromServer }) => {
   const [user, setUser] = useState(userFromServer || null);
+  const [reviews, setReviews] = useState([]); // هنا نخزن الريفيوز
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (userFromServer) return;
+    if (userFromServer) {
+      setLoading(false);
+      setUser(userFromServer.user);
+      setReviews(userFromServer.reviews || []);
+      return;
+    }
 
     const fetchUser = async () => {
       try {
@@ -21,24 +27,26 @@ export const UserProvider = ({ children , userFromServer }) => {
 
         const data = await res.json();
 
-        
         if (data.status === "success") {
           setUser(data.user);
+          setReviews(data.reviews || []);
         } else {
           setUser(null);
+          setReviews([]);
         }
       } catch (err) {
         setUser(null);
+        setReviews([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [userFromServer,user]);
+  }, [userFromServer]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
+    <UserContext.Provider value={{ user, setUser, reviews, setReviews, loading }}>
       {children}
     </UserContext.Provider>
   );
