@@ -12,10 +12,11 @@ export default   function TrailerPage({ params }) {
   const { movieId } = React.use(params);
   const [trailerUrl, setTrailerUrl] = useState(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     async function unwrapParams() {
       const resolvedParams = await params;
-      setMovieId(resolvedParams.movieId); 
     }
 
     unwrapParams();
@@ -49,7 +50,9 @@ export default   function TrailerPage({ params }) {
           allowFullScreen
         ></iframe>
       ) : (
+        <div className="flex items-center w-[1080px] h-[500px] justify-center">
           <Spinner1/>
+        </div>
       )}
     </div>
   );

@@ -91,7 +91,7 @@ const ProfileHeader = ({ name, email, handleLogout, profilePic, setUser }) => {
               uploading ? "opacity-50 pointer-events-none" : ""
             }`}
           >
-            {uploading ? "Uploading..." : "Change Picture"}
+            {uploading ? "Uploading..." : (profilePic? "Change Picture" : "Upload Picture")}
           </label>
 
           <input
