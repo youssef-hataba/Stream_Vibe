@@ -11,12 +11,11 @@ const Section = ({
   updating,
 }) => {
   return (
-    <div className={`${title.toLowerCase().replace(" ", "-")} mt-12`}>
+    <div className={`${title.toLowerCase().replace(" ", "-")} mt-12 px-4`}>
       <h3 className="text-3xl font-semibold mb-7">{title}</h3>
-      <div className="flex gap-5 overflow-x-auto scroll-smooth pb-4">
+      <div className="flex gap-5 overflow-x-auto pb-4">
         {movies.length > 0 ? (
           movies.map((movie, index) => {
-            // Find review for this movie
             const userReview = reviews.find(
               (review) => review.movieId === movie.movieId
             );

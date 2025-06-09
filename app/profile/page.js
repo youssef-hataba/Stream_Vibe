@@ -1,20 +1,24 @@
 "use client";
 
-import {useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {useUser} from "../context/UserContext";
-import {Spinner1} from "../_components/Spinner";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "../context/UserContext";
+import { Spinner1 } from "../_components/Spinner";
 import Section from "../_components/profile/Section";
 import ProfileHeader from "../_components/profile/ProfileHeader";
-import {useMovieActions} from "../hooks/useMoviesAction";
+import { useMovieActions } from "../hooks/useMoviesAction";
 
 function ProfilePage() {
   const router = useRouter();
   const { user, setUser, reviews, loading } = useUser();
-  const {updating, isInWatchLater, isFavorite, toggleWatchLater, toggleFavorites} =
-    useMovieActions();
+  const {
+    updating,
+    isInWatchLater,
+    isFavorite,
+    toggleWatchLater,
+    toggleFavorites,
+  } = useMovieActions();
 
-  // Redirect if user logs out or not logged in
   useEffect(() => {
     if (!loading && !user) {
       router.push("/");
@@ -34,11 +38,11 @@ function ProfilePage() {
     }
   };
 
-  if (loading || !user) return <Spinner1/>;
+  if (loading || !user) return <Spinner1 />;
 
   const sections = [
-    {title: "Watchlist", movies: user?.watchLater || []},
-    {title: "Favorites", movies: user?.favorites || []},
+    { title: "Watchlist", movies: user?.watchLater || [] },
+    { title: "Favorites", movies: user?.favorites || [] },
   ];
 
   return (
@@ -51,7 +55,7 @@ function ProfilePage() {
         handleLogout={handleLogout}
       />
 
-      {sections.map(({title, movies}) => (
+      {sections.map(({ title, movies }) => (
         <Section
           key={title}
           title={title}

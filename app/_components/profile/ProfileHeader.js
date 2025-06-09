@@ -9,104 +9,100 @@ const ProfileHeader = ({ name, email, handleLogout, profilePic, setUser }) => {
   const [preview, setPreview] = useState(profilePic);
 
   const handleFileChange = async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const previewUrl = URL.createObjectURL(file);
-  setPreview(previewUrl);
+    const previewUrl = URL.createObjectURL(file);
+    setPreview(previewUrl);
 
-  const formData = new FormData();
-  formData.append("image", file);
+    const formData = new FormData();
+    formData.append("image", file);
 
-  try {
-    setUploading(true);
-    const res = await fetch("http://localhost:5000/api/user/upload-profilePic", {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      // Get latest user data
-      const userRes = await fetch("http://localhost:5000/api/user/profile", {
-        method: "GET",
+    try {
+      setUploading(true);
+      const res = await fetch("http://localhost:5000/api/user/upload-profilePic", {
+        method: "POST",
         credentials: "include",
+        body: formData,
       });
-      const userData = await userRes.json();
 
-      if (userRes.ok && userData.user) {
-        setUser(userData.user);
+      const data = await res.json();
+
+      if (res.ok) {
+        const userRes = await fetch("http://localhost:5000/api/user/profile", {
+          method: "GET",
+          credentials: "include",
+        });
+        const userData = await userRes.json();
+        if (userRes.ok && userData.user) {
+          setUser(userData.user);
+        }
+      } else {
+        alert(data.message || "Failed to upload image");
+        setPreview(profilePic);
       }
-    } else {
-      alert(data.message || "Failed to upload image");
+    } catch (err) {
+      alert("Error uploading image");
       setPreview(profilePic);
+    } finally {
+      setUploading(false);
     }
-  } catch (err) {
-    alert("Error uploading image");
-    setPreview(profilePic);
-  } finally {
-    setUploading(false);
-  }
-};
+  };
 
   return (
-    <div className="flex items-center gap-4 mt-6">
-      
-      <div className="bg-black-6 p-6 border border-black-15 w-[200px] h-[200px] flex items-center justify-center">
+    <div className="bg-black-6 rounded-xl border border-black-15 p-6 mt-6 mx-4 flex flex-col md:flex-row items-center md:items-start gap-6">
+      {/* Avatar */}
+      <div className="relative w-[160px] h-[160px] rounded-full overflow-hidden border border-black-30">
         {preview ? (
-          <div className="relative w-[180px] h-[160px] rounded-full overflow-hidden">
-            <Image
-              src={preview}
-              alt={`${name} profile picture`}
-              fill
-              style={{ objectFit: "cover" }}
-              priority
-            />
-          </div>
+          <Image
+            src={preview}
+            alt={`${name} profile picture`}
+            fill
+            className="object-cover"
+            priority
+          />
         ) : (
-          <div className="bg-black-20 rounded-full p-2 flex items-center justify-center w-[160px] h-[160px]">
+          <div className="w-full h-full bg-black-20 flex items-center justify-center">
             <AiOutlineUser className="text-gray-60" size={80} />
           </div>
         )}
       </div>
 
-      
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1 self-start mb-5">
-          <p>
-            <span className="text-gray-60">Name:</span> {name}
-          </p>
-          <p>
-            <span className="text-gray-60">Email:</span> {email}
-          </p>
+      {/* Info & Actions */}
+      <div className="flex-1 flex flex-col items-center md:items-start gap-4">
+        {/* Name & Email */}
+        <div className="text-center md:text-left">
+          <h2 className="text-xl font-bold text-white mb-1">{name}</h2>
+          <p className="text-gray-60">{email}</p>
         </div>
-        <button
-          onClick={handleLogout}
-          className="border border-black-15 py-2 px-4 rounded-full text-red-50
-            opacity-[80%] font-semibold hover:bg-red-50 hover:bg-opacity-80 hover:font-bold hover:text-black-6
-            transition-all duration-300"
-        >
-          Logout
-        </button>
 
-        
-        <label
-          htmlFor="upload-profile-pic"
-          className={`cursor-pointer text-center text-sm text-red-45 underline ${
-            uploading ? "opacity-50 pointer-events-none" : ""
-          }`}
-        >
-          {uploading ? "Uploading..." : "Change Profile Picture"}
-        </label>
-        <input
-          id="upload-profile-pic"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileChange}
-          disabled={uploading}
-        />
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-2">
+          <button
+            onClick={handleLogout}
+            className="bg-red-50 text-black-6 px-5 py-2 rounded-full font-semibold hover:opacity-90 transition-all duration-200"
+          >
+            Logout
+          </button>
+
+          <label
+            htmlFor="upload-profile-pic"
+            className={`px-5 py-2 border border-red-45 text-red-45 rounded-full text-sm font-medium cursor-pointer hover:bg-red-45 hover:text-black-6 transition ${
+              uploading ? "opacity-50 pointer-events-none" : ""
+            }`}
+          >
+            {uploading ? "Uploading..." : "Change Picture"}
+          </label>
+
+          <input
+            id="upload-profile-pic"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+            disabled={uploading}
+          />
+        </div>
       </div>
     </div>
   );
