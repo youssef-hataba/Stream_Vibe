@@ -5,13 +5,12 @@ import Search from "./Search";
 import {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {AiOutlineUser} from "react-icons/ai";
-import { useUser } from "@/app/context/UserContext";
+import {useUser} from "@/app/context/UserContext";
 import Image from "next/image";
-
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUser();
+  const {user} = useUser();
 
   const classes = isOpen ? "" : "hidden lg:block";
 
@@ -19,13 +18,12 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-
   return (
     <nav className="mx-4 sm:mx-[6%] flex items-center justify-between pt-[20px] pb-[30px]">
       {/* Logo */}
       {!isOpen && (
         <Link href="/">
-        <Image src="/Logo.svg" alt="logo" height={46} width={153}/>
+          <Image src="/Logo.svg" alt="logo" height={46} width={153} />
         </Link>
       )}
 
@@ -37,20 +35,24 @@ const Navbar = () => {
         <FaSearch className="text-red-45 lg:hidden" size={25} onClick={handleOpen} />
 
         {/* Conditional Rendering based on user session */}
-        {!isOpen &&(
+        {!isOpen && (
           <>
             {user ? (
-              <Link href="/profile" aria-label="User profile" className="p-1 rounded-full bg-black-15">
+              <Link
+                href="/profile"
+                aria-label="User profile"
+                className="rounded-full bg-black-15 w-9 h-9 flex items-center justify-center overflow-hidden">
                 {user.profilePic ? (
                   <Image
                     src={user.profilePic}
                     alt="User profilePic"
                     width={36}
                     height={36}
-                    className="rounded-full object-cover"
+                    className="rounded-full object-cover object-center"
+                    priority
                   />
                 ) : (
-                  <AiOutlineUser className="text-red-45 opacity-[80%] text-3xl" />
+                  <AiOutlineUser className="text-red-45 opacity-80 text-3xl" />
                 )}
               </Link>
             ) : (
@@ -70,4 +72,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

@@ -46,6 +46,8 @@ function ProfilePage() {
       <ProfileHeader
         name={`${user?.firstName} ${user?.lastName}`}
         email={user?.email}
+        profilePic={user?.profilePic}
+        setUser={setUser}
         handleLogout={handleLogout}
       />
 

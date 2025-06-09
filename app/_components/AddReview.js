@@ -19,7 +19,7 @@ const Review = ({movieId, onReviewSubmitted}) => {
   );
 
   const handleToggle = () => {
-    if (!user || !loading) {
+    if (!user && !loading) {
       setAlert({
         show: true,
         message: "You need to be logged in to submit a review.",

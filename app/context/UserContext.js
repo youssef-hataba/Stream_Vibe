@@ -5,17 +5,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children, userFromServer }) => {
-  const [user, setUser] = useState(userFromServer || null);
-  const [reviews, setReviews] = useState([]); // هنا نخزن الريفيوز
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(userFromServer?.user || null);
+  const [reviews, setReviews] = useState(userFromServer?.reviews || []);
+  const [loading, setLoading] = useState(!userFromServer);
 
   useEffect(() => {
-    if (userFromServer) {
-      setLoading(false);
-      setUser(userFromServer.user);
-      setReviews(userFromServer.reviews || []);
-      return;
-    }
+    if (userFromServer) return ;
 
     const fetchUser = async () => {
       try {
