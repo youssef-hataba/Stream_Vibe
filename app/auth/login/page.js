@@ -67,7 +67,7 @@ export default function LoginPage() {
 
   return (
     <div className="w-screen min-h-screen z-10 absolute left-0 top-0 flex items-center justify-center bg-cover bg-center bg-black-6">
-      {/* <MovieWall /> */}
+      <MovieWall />
       <div className="w-full h-screen absolute backdrop-blur-[4px] bg-black-6/35"></div>
       <Link href="/" className="absolute left-[6%] top-[21px] z-40">
         <Image src="/Logo.svg" alt="logo" height={46} width={153}/>
