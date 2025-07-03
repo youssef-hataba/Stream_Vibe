@@ -16,7 +16,7 @@ https://stream-vibe-lilac.vercel.app/
 This project was developed collaboratively by:
 
 - [Youssef Hataba](https://github.com/youssef-hataba) — Frontend Engineer  
-- [Her Name](https://github.com/rawanayman229) — Frontend Engineer & Collaborator
+- [Rewan ayman](https://github.com/rawanayman229) — Frontend Engineer & Collaborator
 
 
 ## Features
